@@ -9,11 +9,11 @@
     <a-scene vr-mode-ui="enabled: true" background="color: #111">
         <!-- Assets -->
         <a-assets>
-            <!-- Шаблон для інтерактивних плиток-елементів -->
-            <a-mixin id="element-tile"
-                     geometry="primitive: box; width: 1; height: 1; depth: 0.2"
-                     animation__mouseenter="property: position.z; to: 0.2; startEvents: mouseenter; dur: 200"
-                     animation__mouseleave="property: position.z; to: 0; startEvents: mouseleave; dur: 200">
+            <!-- Шаблон для інтерактивних КУБИКІВ -->
+            <a-mixin id="element-box"
+                     geometry="primitive: box; width: 1; height: 1; depth: 1"
+                     animation__mouseenter="property: scale; to: 1.2 1.2 1.2; startEvents: mouseenter; dur: 200"
+                     animation__mouseleave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 200">
             </a-mixin>
         </a-assets>
         
@@ -22,33 +22,21 @@
         <a-light type="ambient" color="#AAA"></a-light>
         <a-light type="directional" position="-1 1 2" intensity="0.8"></a-light>
         
-        <!-- Контейнер для таблиці. Ми його трохи перемістили -->
+        <!-- Контейнер для таблиці -->
         <a-entity id="periodic-table-container" position="-9 5 -12" periodic-table-generator>
-            <!-- JavaScript створить тут плитки-елементи -->
+            <!-- JavaScript створить тут кубики -->
         </a-entity>
         
-        <!-- ========================================================== -->
-        <!-- НОВА ІНФОРМАЦІЙНА КАРТКА (спочатку невидима) -->
-        <!-- ========================================================== -->
-        <a-entity id="info-card" position="3.5 3.5 -9" visible="false">
-            <!-- Напівпрозорий фон для картки -->
-            <a-plane id="info-bg" width="4.5" height="4" color="#222" material="opacity: 0.8"></a-plane>
+        <!-- Інформаційна картка (спочатку з привітанням) -->
+        <a-entity id="info-card" position="3.5 3.5 -9" visible="true"> <!-- Тепер видима одразу -->
+            <!-- Фон картки -->
+            <a-plane width="4.5" height="4" color="#222" material="opacity: 0.8"></a-plane>
             
-            <!-- Великий номер елемента у кутку -->
-            <a-text id="info-number" value="1" color="#FFF" width="10" align="left"
-                    position="-1.8 1.5 0.1"></a-text>
-            
-            <!-- Великий символ елемента -->
-            <a-text id="info-symbol" value="H" color="#FFF" width="20" align="center"
-                    position="0 0.5 0.1"></a-text>
-
-            <!-- Назва елемента -->
-            <a-text id="info-name" value="Hydrogen" color="#FFF" width="6" align="center"
-                    position="0 -0.5 0.1"></a-text>
-
-            <!-- Інша інформація (вирівняна по лівому краю) -->
-            <a-text id="info-details" value="Details" color="#DDD" width="5" align="left" wrap-count="40"
-                    position="-1.8 -1.3 0.1"></a-text>
+            <!-- Поля для інформації -->
+            <a-text id="info-number" value=" " color="#FFF" width="10" align="left" position="-1.8 1.5 0.1"></a-text>
+            <a-text id="info-symbol" value="?" color="#FFF" width="20" align="center" position="0 0.5 0.1"></a-text>
+            <a-text id="info-name" value="Click an Element" color="#FFF" width="6" align="center" position="0 -0.5 0.1"></a-text>
+            <a-text id="info-details" value="Select an element from the table to learn more about it." color="#DDD" width="5" align="left" wrap-count="40" position="-1.8 -1.3 0.1"></a-text>
         </a-entity>
         
         <!-- Камера з курсором -->
@@ -60,7 +48,7 @@
     <script>
         // --- РОЗШИРЕНІ ДАНІ ПРО ЕЛЕМЕНТИ ---
         const elementsData = [
-            // number, symbol, name, mass, group, x, y, boiling_point_k, electron_config
+            // ... (дані залишаються такими ж, як у попередній версії)
             { number: 1, symbol: 'H', name: 'Hydrogen', mass: 1.008, group: 'nonmetal', x: 0, y: 0, boiling_point_k: 20.28, electron_config: '1s¹' },
             { number: 2, symbol: 'He', name: 'Helium', mass: 4.0026, group: 'noble-gas', x: 17, y: 0, boiling_point_k: 4.22, electron_config: '1s²' },
             { number: 3, symbol: 'Li', name: 'Lithium', mass: 6.94, group: 'alkali-metal', x: 0, y: 1, boiling_point_k: 1615, electron_config: '[He] 2s¹' },
@@ -81,80 +69,81 @@
             { number: 18, symbol: 'Ar', name: 'Argon', mass: 39.948, group: 'noble-gas', x: 17, y: 2, boiling_point_k: 87.30, electron_config: '[Ne] 3s² 3p⁶' }
         ];
 
-        // --- ОНОВЛЕНА КОЛЬОРОВА СХЕМА (більш стандартна) ---
         const groupColors = {
-            'nonmetal': '#90EE90', // Світло-зелений
-            'noble-gas': '#C8A2C8', // Бузковий
-            'alkali-metal': '#FF6347', // Томатний
-            'alkaline-earth-metal': '#FFD700', // Золотий
-            'metalloid': '#A52A2A', // Коричневий
-            'halogen': '#40E0D0', // Бірюзовий
-            'post-transition-metal': '#B0C4DE' // Світло-сталевий
+            'nonmetal': '#90EE90',
+            'noble-gas': '#C8A2C8',
+            'alkali-metal': '#FF6347',
+            'alkaline-earth-metal': '#FFD700',
+            'metalloid': '#A52A2A',
+            'halogen': '#40E0D0',
+            'post-transition-metal': '#B0C4DE'
         };
         
-        // --- ЛОГІКА СТВОРЕННЯ ТАБЛИЦІ (компонент A-Frame) ---
         AFRAME.registerComponent('periodic-table-generator', {
             init: function() {
                 const tableContainer = this.el;
 
-                // Отримуємо доступ до елементів інформаційної картки
-                const infoCard = document.getElementById('info-card');
-                const infoNumber = document.getElementById('info-number');
-                const infoSymbol = document.getElementById('info-symbol');
-                const infoName = document.getElementById('info-name');
-                const infoDetails = document.getElementById('info-details');
-
                 elementsData.forEach(elementData => {
-                    const tile = document.createElement('a-entity');
-                    tile.setAttribute('mixin', 'element-tile');
-                    tile.classList.add('clickable');
+                    // Створюємо КУБИК
+                    const box = document.createElement('a-entity');
+                    box.setAttribute('mixin', 'element-box'); // Використовуємо шаблон для кубиків
+                    box.classList.add('clickable');
 
-                    const xPos = elementData.x * 1.1; // Зменшили відстань
-                    const yPos = -elementData.y * 1.1;
-                    tile.setAttribute('position', `${xPos} ${yPos} 0`);
+                    const xPos = elementData.x * 1.2;
+                    const yPos = -elementData.y * 1.2;
+                    box.setAttribute('position', `${xPos} ${yPos} 0`);
                     
-                    tile.setAttribute('material', 'color', groupColors[elementData.group] || '#FFF');
+                    box.setAttribute('material', 'color', groupColors[elementData.group] || '#FFF');
                     
-                    // Додаємо текст-символ на саму плитку
+                    // Зберігаємо дані в самому об'єкті
+                    box.dataset.elementInfo = JSON.stringify(elementData);
+
+                    // Додаємо текст-символ
                     const symbolText = document.createElement('a-text');
                     symbolText.setAttribute('value', elementData.symbol);
                     symbolText.setAttribute('align', 'center');
-                    symbolText.setAttribute('position', '0 0 0.15');
+                    symbolText.setAttribute('position', '0 0 0.6'); // Трохи попереду кубика
                     symbolText.setAttribute('color', '#000');
-                    symbolText.setAttribute('width', 5);
-                    tile.appendChild(symbolText);
+                    symbolText.setAttribute('width', 4);
+                    box.appendChild(symbolText);
                     
-                    // ==========================================================
-                    // НОВА ЛОГІКА ВЗАЄМОДІЇ (НАВЕДЕННЯ ЗАМІСТЬ КЛІКУ)
-                    // ==========================================================
-                    tile.addEventListener('mouseenter', function() {
-                        // 1. Оновлюємо інформацію на картці
-                        infoNumber.setAttribute('value', elementData.number);
-                        infoSymbol.setAttribute('value', elementData.symbol);
-                        infoName.setAttribute('value', elementData.name);
-                        
-                        // Розраховуємо температуру в Цельсіях
-                        const tempCelsius = (elementData.boiling_point_k - 273.15).toFixed(2);
-                        
-                        // Формуємо рядок з деталями
-                        const detailsText = 
-                            `Atomic Mass: ${elementData.mass}\n` +
-                            `Group: ${elementData.group.replace(/-/g, ' ')}\n\n` +
-                            `Boiling Point: ${elementData.boiling_point_k} K / ${tempCelsius} °C\n\n` +
-                            `Electron Config: ${elementData.electron_config}`;
-                        
-                        infoDetails.setAttribute('value', detailsText);
-                        
-                        // 2. Робимо картку видимою
-                        infoCard.setAttribute('visible', true);
-                    });
+                    tableContainer.appendChild(box);
+                });
 
-                    tile.addEventListener('mouseleave', function() {
-                        // 3. Ховаємо картку, коли курсор йде з елемента
-                        infoCard.setAttribute('visible', false);
-                    });
+                // ==========================================================
+                // НОВА ЛОГІКА: ОНОВЛЕННЯ КАРТКИ ПО КЛІКУ
+                // ==========================================================
+                // Функція для оновлення картки
+                function updateInfoCard(elementData) {
+                    // Отримуємо доступ до елементів картки
+                    const infoNumber = document.getElementById('info-number');
+                    const infoSymbol = document.getElementById('info-symbol');
+                    const infoName = document.getElementById('info-name');
+                    const infoDetails = document.getElementById('info-details');
                     
-                    tableContainer.appendChild(tile);
+                    // Оновлюємо інформацію
+                    infoNumber.setAttribute('value', elementData.number);
+                    infoSymbol.setAttribute('value', elementData.symbol);
+                    infoName.setAttribute('value', elementData.name);
+                    
+                    const tempCelsius = (elementData.boiling_point_k - 273.15).toFixed(2);
+                    
+                    const detailsText = 
+                        `Atomic Mass: ${elementData.mass}\n` +
+                        `Group: ${elementData.group.replace(/-/g, ' ')}\n\n` +
+                        `Boiling Point: ${elementData.boiling_point_k} K / ${tempCelsius} °C\n\n` +
+                        `Electron Config: ${elementData.electron_config}`;
+                    
+                    infoDetails.setAttribute('value', detailsText);
+                }
+
+                // Слухаємо кліки по всій сцені
+                this.el.sceneEl.addEventListener('click', function(event) {
+                    // Перевіряємо, чи клікнули на об'єкт з класом clickable
+                    if (event.target.classList.contains('clickable')) {
+                        const info = JSON.parse(event.target.dataset.elementInfo);
+                        updateInfoCard(info);
+                    }
                 });
             }
         });
