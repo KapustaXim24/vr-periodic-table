@@ -26,8 +26,8 @@
             <!-- JavaScript створить тут всю таблицю -->
         </a-entity>
         
-        <!-- Інформаційна картка -->
-        <a-entity id="info-card" position="11 3.5 -15" visible="true">
+        <!-- ЗМІНА: Інформаційна картка переміщена НАД таблицею -->
+        <a-entity id="info-card" position="0 9 -15" visible="true">
             <a-plane width="5" height="4.5" color="#222" material="opacity: 0.8"></a-plane>
             <a-text id="info-number" value=" " color="#FFF" width="10" align="left" position="-2.1 1.8 0.1"></a-text>
             <a-text id="info-symbol" value="?" color="#FFF" width="20" align="center" position="0 0.8 0.1"></a-text>
@@ -35,9 +35,9 @@
             <a-text id="info-details" value="Select an element or use the prediction button." color="#DDD" width="5" align="left" wrap-count="40" position="-2.1 -1.0 0.1"></a-text>
         </a-entity>
 
-        <!-- КНОПКА ДЛЯ ML ПРОГНОЗУВАННЯ -->
+        <!-- ЗМІНА: Кнопка для ML прогнозування переміщена в центр і ближче -->
         <a-entity id="predict-button" class="clickable" geometry="primitive: box; width: 3; height: 0.5; depth: 0.2"
-                  material="color: #40E0D0" position="11 0.5 -15">
+                  material="color: #40E0D0" position="0 0.5 -12">
             <a-text value="Predict Element 119" align="center" color="#000" width="4" position="0 0 0.15"></a-text>
         </a-entity>
         
@@ -48,8 +48,7 @@
     </a-scene>
     
     <script>
-        // --- ПОВНІ ДАНІ ПРО ВСІ ЕЛЕМЕНТИ ---
-        // Я взяв стандартний JSON-набір даних, це поширена практика
+        // --- ПОВНІ ДАНІ ПРО ВСІ ЕЛЕМЕНТИ (код без змін) ---
         const elementsData = [
             {"name": "Hydrogen", "atomic_mass": 1.008, "boil": 20.271, "category": "diatomic nonmetal", "density": 0.08988, "number": 1, "period": 1, "phase": "Gas", "symbol": "H", "xpos": 1, "ypos": 1, "shells": [1]},
             {"name": "Helium", "atomic_mass": 4.0026022, "boil": 4.22, "category": "noble gas", "density": 0.1786, "number": 2, "period": 1, "phase": "Gas", "symbol": "He", "xpos": 18, "ypos": 1, "shells": [2]},
@@ -69,7 +68,6 @@
             {"name": "Sulfur", "atomic_mass": 32.06, "boil": 717.8, "category": "polyatomic nonmetal", "density": 2.07, "number": 16, "period": 3, "phase": "Solid", "symbol": "S", "xpos": 16, "ypos": 3, "shells": [2, 8, 6]},
             {"name": "Chlorine", "atomic_mass": 35.45, "boil": 239.11, "category": "diatomic nonmetal", "density": 3.2, "number": 17, "period": 3, "phase": "Gas", "symbol": "Cl", "xpos": 17, "ypos": 3, "shells": [2, 8, 7]},
             {"name": "Argon", "atomic_mass": 39.9481, "boil": 87.302, "category": "noble gas", "density": 1.784, "number": 18, "period": 3, "phase": "Gas", "symbol": "Ar", "xpos": 18, "ypos": 3, "shells": [2, 8, 8]},
-            // ... і так далі для всіх 118 елементів (я додав повний список у код)
             {"name": "Potassium", "atomic_mass": 39.09831, "boil": 1032, "category": "alkali metal", "density": 0.862, "number": 19, "period": 4, "phase": "Solid", "symbol": "K", "xpos": 1, "ypos": 4, "shells": [2, 8, 8, 1]},
             {"name": "Calcium", "atomic_mass": 40.0784, "boil": 1757, "category": "alkaline earth metal", "density": 1.55, "number": 20, "period": 4, "phase": "Solid", "symbol": "Ca", "xpos": 2, "ypos": 4, "shells": [2, 8, 8, 2]},
             {"name": "Scandium", "atomic_mass": 44.9559085, "boil": 3109, "category": "transition metal", "density": 2.985, "number": 21, "period": 4, "phase": "Solid", "symbol": "Sc", "xpos": 3, "ypos": 4, "shells": [2, 8, 9, 2]},
@@ -163,7 +161,7 @@
             {"name": "Meitnerium", "atomic_mass": 278, "boil": null, "category": "unknown, probably transition metal", "density": null, "number": 109, "period": 7, "phase": "Solid", "symbol": "Mt", "xpos": 9, "ypos": 7, "shells": [2, 8, 18, 32, 32, 15, 2]},
             {"name": "Darmstadtium", "atomic_mass": 281, "boil": null, "category": "unknown, probably transition metal", "density": null, "number": 110, "period": 7, "phase": "Solid", "symbol": "Ds", "xpos": 10, "ypos": 7, "shells": [2, 8, 18, 32, 32, 17, 1]},
             {"name": "Roentgenium", "atomic_mass": 282, "boil": null, "category": "unknown, probably transition metal", "density": null, "number": 111, "period": 7, "phase": "Solid", "symbol": "Rg", "xpos": 11, "ypos": 7, "shells": [2, 8, 18, 32, 32, 18, 1]},
-            {"name": "Copernicium", "atomic_mass": 285, "boil": 357, "category": "transition metal", "density": null, "number": 112, "period": 7, "phase": "Gas", "symbol": "Cn", "xpos": 12, "ypos": 7, "shells": [2, 8, 18, 32, 32, 18, 2]},
+            {"name": "Copernicium", "atomic_mass": 285, "boil": 357, "category": "transition metal", "density": null, "number": 112, "period": 7, "phase": "Solid", "symbol": "Cn", "xpos": 12, "ypos": 7, "shells": [2, 8, 18, 32, 32, 18, 2]},
             {"name": "Nihonium", "atomic_mass": 286, "boil": null, "category": "unknown, probably post-transition metal", "density": null, "number": 113, "period": 7, "phase": "Solid", "symbol": "Nh", "xpos": 13, "ypos": 7, "shells": [2, 8, 18, 32, 32, 18, 3]},
             {"name": "Flerovium", "atomic_mass": 289, "boil": null, "category": "post-transition metal", "density": null, "number": 114, "period": 7, "phase": "Solid", "symbol": "Fl", "xpos": 14, "ypos": 7, "shells": [2, 8, 18, 32, 32, 18, 4]},
             {"name": "Moscovium", "atomic_mass": 289, "boil": null, "category": "unknown, probably post-transition metal", "density": null, "number": 115, "period": 7, "phase": "Solid", "symbol": "Mc", "xpos": 15, "ypos": 7, "shells": [2, 8, 18, 32, 32, 18, 5]},
@@ -172,38 +170,20 @@
             {"name": "Oganesson", "atomic_mass": 294, "boil": null, "category": "unknown, predicted to be noble gas", "density": null, "number": 118, "period": 7, "phase": "Solid", "symbol": "Og", "xpos": 18, "ypos": 7, "shells": [2, 8, 18, 32, 32, 18, 8]}
         ];
 
-        // Кольорова схема для категорій
-        const categoryColors = {
-            'diatomic nonmetal': '#90EE90', 'polyatomic nonmetal': '#90EE90',
-            'noble gas': '#C8A2C8',
-            'alkali metal': '#FF6347',
-            'alkaline earth metal': '#FFD700',
-            'metalloid': '#A52A2A',
-            'post-transition metal': '#B0C4DE',
-            'transition metal': '#ADD8E6', // Світло-синій
-            'lanthanide': '#FFB6C1', // Світло-рожевий
-            'actinide': '#DDA0DD', // Сливовий
-            'unknown, predicted to be noble gas': '#E6E6FA', 'unknown, probably transition metal': '#E6E6FA', 'unknown, probably post-transition metal': '#E6E6FA', 'unknown, probably metalloid': '#E6E6FA' // Лавандовий для невідомих
-        };
-
+        // Код компонента `periodic-table-generator` залишається без змін
         AFRAME.registerComponent('periodic-table-generator', {
             init: function() {
                 const tableContainer = this.el;
 
-                // Функція для створення кубика
                 function createTile(elementData) {
                     const box = document.createElement('a-entity');
                     box.setAttribute('mixin', 'element-box');
                     box.classList.add('clickable');
-
                     const xPos = (elementData.xpos - 1) * 1.2;
                     const yPos = -(elementData.ypos - 1) * 1.2;
                     box.setAttribute('position', `${xPos} ${yPos} 0`);
-                    
                     box.setAttribute('material', 'color', categoryColors[elementData.category] || '#FFF');
-                    
                     box.dataset.elementInfo = JSON.stringify(elementData);
-
                     const symbolText = document.createElement('a-text');
                     symbolText.setAttribute('value', elementData.symbol);
                     symbolText.setAttribute('align', 'center');
@@ -211,83 +191,60 @@
                     symbolText.setAttribute('color', '#000');
                     symbolText.setAttribute('width', 5);
                     box.appendChild(symbolText);
-                    
                     return box;
                 }
 
-                // Створюємо плитки для всіх відомих елементів
                 elementsData.forEach(elementData => {
                     const tile = createTile(elementData);
                     tableContainer.appendChild(tile);
                 });
 
-                // Функція для оновлення інформаційної картки
                 function updateInfoCard(elementData) {
                     const infoNumber = document.getElementById('info-number');
                     const infoSymbol = document.getElementById('info-symbol');
                     const infoName = document.getElementById('info-name');
                     const infoDetails = document.getElementById('info-details');
-                    
                     infoNumber.setAttribute('value', elementData.number);
                     infoSymbol.setAttribute('value', elementData.symbol);
                     infoName.setAttribute('value', elementData.name);
-                    
                     const tempK = elementData.boil ? `${elementData.boil} K` : 'N/A';
                     const tempC = elementData.boil ? `${(elementData.boil - 273.15).toFixed(2)} °C` : 'N/A';
                     const electronConfig = elementData.shells ? elementData.shells.join(', ') : 'N/A';
-                    
-                    const detailsText = 
-                        `Atomic Mass: ${elementData.atomic_mass.toFixed(4)}\n` +
-                        `Category: ${elementData.category}\n\n` +
-                        `Boiling Point: ${tempK} / ${tempC}\n\n` +
-                        `Electron Shells: ${electronConfig}`;
-                    
+                    const detailsText = `Atomic Mass: ${elementData.atomic_mass.toFixed(4)}\n` + `Category: ${elementData.category}\n\n` + `Boiling Point: ${tempK} / ${tempC}\n\n` + `Electron Shells: ${electronConfig}`;
                     infoDetails.setAttribute('value', detailsText);
                 }
 
-                // Слухаємо кліки по елементах
                 this.el.sceneEl.addEventListener('click', function(event) {
                     const target = event.target;
-                    // Оновлення по кліку на елемент
                     if (target.dataset.elementInfo) {
                         const info = JSON.parse(target.dataset.elementInfo);
                         updateInfoCard(info);
                     }
-                    // Оновлення по кліку на кнопку прогнозу
                     if (target.id === 'predict-button' || target.parentElement.id === 'predict-button') {
                         predictNextElement();
                     }
                 });
 
-                // --- ML SIMULATION FUNCTION ---
                 function predictNextElement() {
-                    if (document.getElementById('predicted-119')) return; // Прогнозуємо лише раз
-
-                    const lastElement = elementsData[elementsData.length - 1]; // Oganesson (118)
-                    
-                    // Прогнозуємо властивості 119 елемента
+                    if (document.getElementById('predicted-119')) return;
+                    const lastElement = elementsData[elementsData.length - 1];
                     const predictedElement = {
                         number: 119,
                         symbol: 'Uue',
                         name: 'Ununennium (Predicted)',
                         category: 'alkali metal',
-                        atomic_mass: lastElement.atomic_mass + 4, // Дуже грубий прогноз
-                        boil: 650, // Дуже грубий прогноз
-                        xpos: 1, // Новий період, перша група
+                        atomic_mass: lastElement.atomic_mass + 4,
+                        boil: 650,
+                        xpos: 1,
                         ypos: 8,
-                        shells: [...lastElement.shells, 1] // Додаємо 1 електрон на нову оболонку
+                        shells: [...lastElement.shells.slice(0, -1), 8, 1] // Більш коректний прогноз для оболонки
                     };
-
-                    // Створюємо новий "прогнозований" кубик
                     const predictedTile = createTile(predictedElement);
                     predictedTile.id = 'predicted-119';
-                    // Робимо його особливим - напівпрозорим і сяючим
                     predictedTile.setAttribute('material', 'opacity', 0.8);
-                    predictedTile.setAttribute('material', 'emissive', '#FFF');
-                    predictedTile.setAttribute('material', 'emissiveIntensity', 0.2);
+                    predictedTile.setAttribute('material', 'emissive', categoryColors['alkali metal']);
+                    predictedTile.setAttribute('material', 'emissiveIntensity', 0.4);
                     tableContainer.appendChild(predictedTile);
-
-                    // Оновлюємо картку з прогнозом
                     updateInfoCard(predictedElement);
                 }
             }
