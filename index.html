@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <title>VR Periodic Table</title>
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-    <!-- Ми не будемо завантажувати TensorFlow, щоб не ускладнювати, а імітуємо його в JS -->
 </head>
 <body>
     <a-scene vr-mode-ui="enabled: true" background="color: #0c0c0c">
@@ -47,7 +46,8 @@
         
         <!-- Камера з курсором -->
         <a-camera position="0 1.6 0">
-            <a-cursor raycaster="objects: [mixin~=element-box]"></a-cursor>
+            <!-- ЗМІНА 1: Змінили raycaster, щоб він реагував на клас .clickable -->
+            <a-cursor raycaster="objects: .clickable"></a-cursor>
         </a-camera>
     </a-scene>
     
@@ -106,6 +106,8 @@
                 elementsData.forEach(element => {
                     // Створюємо новий елемент-кубик
                     const box = document.createElement('a-entity');
+                    // ЗМІНА 2: Додаємо клас .clickable, щоб курсор міг його "бачити"
+                    box.classList.add('clickable');
                     box.setAttribute('mixin', 'element-box'); // Використовуємо наш шаблон
                     
                     // Задаємо позицію кубика на основі його координат x, y
