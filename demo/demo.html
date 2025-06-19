@@ -2,8 +2,19 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <title/demo.html` у репозиторії `vr-periodic-table` на цей код.
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
     <title>Final VR Periodic Table (36 Elements)</title>
+    <script src="https://aframe.io/releases/>Interactive VR Periodic Table (36 Elements)</title>
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+</head>
+<body>
+    <a-scene vr-mode-ui="enabled: true" background="color: #111" cursor="1.4.0/aframe.min.js"></script>
 </head>
 <body>
     <a-scene vr-mode-ui="enabled: true" background="color: #111">
@@ -11,9 +22,21 @@
         <a-assets>
             <a-mixin id="element-box"
                      geometry="primitive: box; width: 1; height: 1; depth: 1"
-                     animation__mouseenter="property: scale; to: 1.2 1.2 1.2; startEvents: mouseenter; dur: 200"
+                     animationrayOrigin: mouse; fusing: false">
+        <!-- Assets -->
+        <a-assets>
+            <a-mixin id="element-box"
+                     geometry="primitive: box; width: 1; height: 1; depth: 1"
+                     animation__mouseenter="property: scale; to: 1.2__mouseenter="property: scale; to: 1.2 1.2 1.2; startEvents: mouseenter; dur: 200"
+                     animation__mouseleave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 200">
+            </a- 1.2 1.2; startEvents: mouseenter; dur: 200"
                      animation__mouseleave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 200">
             </a-mixin>
+        </a-assets>
+        
+        <!-- Оточення -->
+        <a-sky color="#202020"></a-sky>
+mixin>
         </a-assets>
         
         <!-- Оточення -->
@@ -21,76 +44,164 @@
         <a-light type="ambient" color="#AAA"></a-light>
         <a-light type="directional" position="-1 1 2" intensity="0.8"></a-light>
         
-        <!-- Контейнер для таблиці. Змінено позицію, щоб було НАБАГАТО БЛИЖЧЕ -->
-        <a-entity id="periodic-table-container" position="-10.5 4 -7" periodic-table-generator></a-entity>
+        <!-- Контейнер для таблиці. ВІДС        <a-light type="ambient" color="#AAA"></a-light>
+        <a-light type="directional" position="-1 1 2" intensity="0.8"></a-light>
         
-        <!-- Інформаційна картка. Також змінено позицію -->
-        <a-entity id="info-card" position="0 7 -7" visible="true">
+        <!-- Вся сцена (таблиця + UI) відсунута трохи назад по осі Z -->
+        <a-entity position="0 0 -2">
+
+            <!-- Контейнер для таблиці -->
+            <УНУТО ТРОХИ НАЗАД -->
+        <a-entity id="periodic-table-container" position="-10.5 4 -9" periodic-table-generator></a-entity>
+        
+        <!-- Інформаційна картка. ОПУЩЕНО НИЖЧЕ -->
+        <a-entity ida-entity id="periodic-table-container" position="-10.5 4 -8" periodic-table-generator></a-entity>
+            
+            <!-- Інформаційна картка. Опущена нижче і текст виправлено -->
+            <a-entity id="info-card" position="0 7 -8" visible="="info-card" position="0 8.5 -9" visible="false">
             <a-plane width="7.5" height="5" color="#222" material="opacity: 0.85"></a-plane>
-            <a-text id="info-number" value=" " color="#FFF" width="12" align="left" position="-3.4 2.0 0.1"></a-text>
-            <a-text id="info-symbol" value="?" color="#FFF" width="25" align="center" position="-0.5 0.9 0.1"></a-text>
-            <a-text id="info-name" value="Періодична Таблиця" color="#FFF" width="7" align="center" position="-0.5 -0.2 0.1"></a-text>
-            <a-text id="info-details" value="Наведіть курсор та клікніть на елемент, щоб побачити деталі." color="#DDD" width="6.8" align="left" wrap-count="55" position="-3.4 -1.0 0.1"></a-text>
+            <a-text id="info-number" value="" color="#FFF" width="12" align="left" position="-3.4 2.0 0.1"></a-text>
+true">
+                <a-plane width="7.5" height="5.5" color="#222" material="opacity: 0.85"></a-plane>
+                <a-text id="info-number" value=" " color="#FFF" width="8" align="left" position="-3.4 2.2 0.1"></a-text>
+                <a-text id="info-symbol" value            <a-text id="info-symbol" value="" color="#FFF" width="25" align="center" position="-0.5 0.9 0.1"></a-text>
+            <a-text id="info-name" value="" color="#FFF" width="7" align="center" position="-0="?" color="#FFF" width="15" align="center" position="-0.5 1.0 0.1"></a-text>
+                <a-text id="info-name" value="Періодична Таблиця" color="#FFF" width="6" align="center" position="-0.5 -0.2 .5 -0.2 0.1"></a-text>
+            <a-text id="info-details" value="" color="#DDD" width="6.8" align="left" wrap-count="55" position="-3.4 -1.0 0.1"></a-text>
         </a-entity>
 
-        <!-- Кнопка для ML прогнозування. -->
-        <a-entity id="predict-button" class="clickable" geometry="primitive: box; width: 3; height: 0.5; depth: 0.2"
-                  material="color: #40E0D0" position="0 -1.5 -5">
+        <!-- Кнопка для ML прогнозування -->
+        <a-entity id="predict-button"0.1"></a-text>
+                <a-text id="info-details" value="Наведіть курсор та клікніть на елемент, щоб побачити деталі." color="#DDD" width="6.5" align="left" wrap-count="45" position="-3.4 -1.2 0.1"></a-text>
+            </a-entity>
+
+            <!-- Кнопка для ML прогнозування class="clickable" geometry="primitive: box; width: 3; height: 0.5; depth: 0.2"
+                  material="color: #40E0D0" position="0 -1.5 -7">
             <a-text value="Прогноз Елемента 37" align="center" color="#000" width="4" position="0 0 0.15"></a-text>
-        </a-entity>
+        </ -->
+            <a-entity id="predict-button" class="clickable" geometry="primitive: box; width: 3; height: 0.5; depth: 0.2"
+                      material="color: #40E0D0" position="0 -1.5 -6">
+                <a-text value="Прогноз Елемента 37" align="center" color="#000" width="4" position="a-entity>
         
-        <!-- Камера зі зручним керуванням -->
-        <a-entity camera look-controls position="0 1.6 0">
-            <a-cursor raycaster="objects: .clickable"></a-cursor>
-        </a-entity>
+        <!-- НОВИЙ КОНТРОЛЕР З КУРСОРОМ-ПРОМЕНЕМ -->
+        <a-entity laser-controls="hand: right" raycaster="objects: .clickable;"></a-entity>
+        
     </a-scene>
     
     <script>
-        // --- ДАНІ ДЛЯ ПЕРШИХ 36 ЕЛЕМЕНТІВ УКРАЇНСЬКОЮ МОВОЮ ---
-        const elementsData = [
-            {"name": "Водень", "atomic_mass": 1.008, "boil": 20.271, "category": "двоатомний неметал", "number": 1, "symbol": "H", "xpos": 1, "ypos": 1, "electronic_configuration": "1s¹"},
-            {"name": "Гелій", "atomic_mass": 4.002602, "boil": 4.22, "category": "інертний газ", "number": 2, "symbol": "He", "xpos": 18, "ypos": 1, "electronic_configuration": "1s²"},
-            {"name": "Літій", "atomic_mass": 6.94, "boil": 1615, "category": "лужний метал", "number": 3, "symbol": "Li", "xpos": 1, "ypos": 2, "electronic_configuration": "[He] 2s¹"},
-            {"name": "Берилій", "atomic_mass": 9.012183, "boil": 2742, "category": "лужноземельний метал", "number": 4, "symbol": "Be", "xpos": 2, "ypos": 2, "electronic_configuration": "[He] 2s²"},
-            {"name": "Бор", "atomic_mass": 10.81, "boil": 4200, "category": "металоїд", "number": 5, "symbol": "B", "xpos": 13, "ypos": 2, "electronic_configuration": "[He] 2s² 2p¹"},
-            {"name": "Карбон", "atomic_mass": 12.011, "boil": 5100, "category": "поліатомний неметал", "number": 6, "symbol": "C", "xpos": 14, "ypos": 2, "electronic_configuration": "[He] 2s² 2p²"},
-            {"name": "Нітроген", "atomic_mass": 14.007, "boil": 77.355, "category": "двоатомний неметал", "number": 7, "symbol": "N", "xpos": 15, "ypos": 2, "electronic_configuration": "[He] 2s² 2p³"},
-            {"name": "Оксиген", "atomic_mass": 15.999, "boil": 90.188, "category": "двоатомний неметал", "number": 8, "symbol": "O", "xpos": 16, "ypos": 2, "electronic_configuration": "[He] 2s² 2p⁴"},
-            {"name": "Флуор", "atomic_mass": 18.998403, "boil": 85.03, "category": "двоатомний неметал", "number": 9, "symbol": "F", "xpos": 17, "ypos": 2, "electronic_configuration": "[He] 2s² 2p⁵"},
-            {"name": "Неон", "atomic_mass": 20.17976, "boil": 27.104, "category": "інертний газ", "number": 10, "symbol": "Ne", "xpos": 18, "ypos": 2, "electronic_configuration": "[He] 2s² 2p⁶"},
-            {"name": "Натрій", "atomic_mass": 22.989769, "boil": 1156.09, "category": "лужний метал", "number": 11, "symbol": "Na", "xpos": 1, "ypos": 3, "electronic_configuration": "[Ne] 3s¹"},
-            {"name": "Магній", "atomic_mass": 24.305, "boil": 1363, "category": "лужноземельний метал", "number": 12, "symbol": "Mg", "xpos": 2, "ypos": 3, "electronic_configuration": "[Ne] 3s²"},
-            {"name": "Алюміній", "atomic_mass": 26.981538, "boil": 2743, "category": "постперехідний метал", "number": 13, "symbol": "Al", "xpos": 13, "ypos": 3, "electronic_configuration": "[Ne] 3s² 3p¹"},
-            {"name": "Силіцій", "atomic_mass": 28.085, "boil": 3265, "category": "металоїд", "number": 14, "symbol": "Si", "xpos": 14, "ypos": 3, "electronic_configuration": "[Ne] 3s² 3p²"},
-            {"name": "Фосфор", "atomic_mass": 30.973762, "boil": 553.7, "category": "поліатомний неметал", "number": 15, "symbol": "P", "xpos": 15, "ypos": 3, "electronic_configuration": "[Ne] 3s² 3p³"},
-            {"name": "Сульфур", "atomic_mass": 32.06, "boil": 717.8, "category": "поліатомний неметал", "number": 16, "symbol": "S", "xpos": 16, "ypos": 3, "electronic_configuration": "[Ne] 3s² 3p⁴"},
-            {"name": "Хлор", "atomic_mass": 35.45, "boil": 239.11, "category": "двоатомний неметал", "number": 17, "symbol": "Cl", "xpos": 17, "ypos": 3, "electronic_configuration": "[Ne] 3s² 3p⁵"},
-            {"name": "Аргон", "atomic_mass": 39.9481, "boil": 87.302, "category": "інертний газ", "number": 18, "symbol": "Ar", "xpos": 18, "ypos": 3, "electronic_configuration": "[Ne] 3s² 3p⁶"},
-            {"name": "Калій", "atomic_mass": 39.09831, "boil": 1032, "category": "лужний метал", "number": 19, "symbol": "K", "xpos": 1, "ypos": 4, "electronic_configuration": "[Ar] 4s¹"},
-            {"name": "Кальцій", "atomic_mass": 40.0784, "boil": 1757, "category": "лужноземельний метал", "number": 20, "symbol": "Ca", "xpos": 2, "ypos": 4, "electronic_configuration": "[Ar] 4s²"},
-            {"name": "Скандій", "atomic_mass": 44.955908, "boil": 3109, "category": "перехідний метал", "number": 21, "symbol": "Sc", "xpos": 3, "ypos": 4, "electronic_configuration": "[Ar] 3d¹ 4s²"},
-            {"name": "Титан", "atomic_mass": 47.8671, "boil": 3560, "category": "перехідний метал", "number": 22, "symbol": "Ti", "xpos": 4, "ypos": 4, "electronic_configuration": "[Ar] 3d² 4s²"},
-            {"name": "Ванадій", "atomic_mass": 50.94151, "boil": 3680, "category": "перехідний метал", "number": 23, "symbol": "V", "xpos": 5, "ypos": 4, "electronic_configuration": "[Ar] 3d³ 4s²"},
-            {"name": "Хром", "atomic_mass": 51.99616, "boil": 2944, "category": "перехідний метал", "number": 24, "symbol": "Cr", "xpos": 6, "ypos": 4, "electronic_configuration": "[Ar] 3d⁵ 4s¹"},
-            {"name": "Манган", "atomic_mass": 54.938044, "boil": 2334, "category": "перехідний метал", "number": 25, "symbol": "Mn", "xpos": 7, "ypos": 4, "electronic_configuration": "[Ar] 3d⁵ 4s²"},
-            {"name": "Ферум", "atomic_mass": 55.8452, "boil": 3134, "category": "перехідний метал", "number": 26, "symbol": "Fe", "xpos": 8, "ypos": 4, "electronic_configuration": "[Ar] 3d⁶ 4s²"},
-            {"name": "Кобальт", "atomic_mass": 58.933194, "boil": 3200, "category": "перехідний метал", "number": 27, "symbol": "Co", "xpos": 9, "ypos": 4, "electronic_configuration": "[Ar] 3d⁷ 4s²"},
-            {"name": "Нікель", "atomic_mass": 58.69344, "boil": 3003, "category": "перехідний метал", "number": 28, "symbol": "Ni", "xpos": 10, "ypos": 4, "electronic_configuration": "[Ar] 3d⁸ 4s²"},
-            {"name": "Купрум", "atomic_mass": 63.5463, "boil": 2835, "category": "перехідний метал", "number": 29, "symbol": "Cu", "xpos": 11, "ypos": 4, "electronic_configuration": "[Ar] 3d¹⁰ 4s¹"},
-            {"name": "Цинк", "atomic_mass": 65.382, "boil": 1180, "category": "постперехідний метал", "number": 30, "symbol": "Zn", "xpos": 12, "ypos": 4, "electronic_configuration": "[Ar] 3d¹⁰ 4s²"},
-            {"name": "Галій", "atomic_mass": 69.7231, "boil": 2673, "category": "постперехідний метал", "number": 31, "symbol": "Ga", "xpos": 13, "ypos": 4, "electronic_configuration": "[Ar] 3d¹⁰ 4s² 4p¹"},
-            {"name": "Германій", "atomic_mass": 72.6308, "boil": 3106, "category": "металоїд", "number": 32, "symbol": "Ge", "xpos": 14, "ypos": 4, "electronic_configuration": "[Ar] 3d¹⁰ 4s² 4p²"},
-            {"name": "Арсен", "atomic_mass": 74.921595, "boil": 887, "category": "металоїд", "number": 33, "symbol": "As", "xpos": 15, "ypos": 4, "electronic_configuration": "[Ar] 3d¹⁰ 4s² 4p³"},
-            {"name": "Селен", "atomic_mass": 78.9718, "boil": 958, "category": "поліатомний неметал", "number": 34, "symbol": "Se", "xpos": 16, "ypos": 4, "electronic_configuration": "[Ar] 3d¹⁰ 4s² 4p⁴"},
-            {"name": "Бром", "atomic_mass": 79.904, "boil": 332, "category": "двоатомний неметал", "number": 35, "symbol": "Br", "xpos": 17, "ypos": 4, "electronic_configuration": "[Ar] 3d¹⁰ 4s² 4p⁵"},
-            {"name": "Криптон", "atomic_mass": 83.7982, "boil": 119.93, "category": "інертний газ", "number": 36, "symbol": "Kr", "xpos": 18, "ypos": 4, "electronic_configuration": "[Ar] 3d¹⁰ 4s² 4p⁶"}
-        ];
+        0 0 0.15"></a-text>
+            </a-entity>
 
-        const categoryColors = { 'двоатомний неметал': '#90EE90', 'поліатомний неметал': '#90EE90', 'інертний газ': '#C8A2C8', 'лужний метал': '#FF6347', 'лужноземельний метал': '#FFD700', 'металоїд': '#A52A2A', 'постперехідний метал': '#B0C4DE', 'перехідний метал': '#ADD8E6'};
+        </a-entity>
+        
+        <!-- Камера. look-controls тепер не потрібен, бо курсор керується// ДАНІ ДЛЯ ПЕРШИХ 36 ЕЛЕМЕНТІВ (код без змін)
+        const elementsData = [{"name":"Водень","atomic_mass":1.008,"boil":20.271,"category":"двоатомний неметал","number":1,"symbol мишкою -->
+        <a-camera position="0 1.6 4"></a-camera>
+    </a-scene>
+    
+    <script>
+        const elementsData = [
+            {"name": "Водень", "atomic_mass": 1.008, "boil": 20.2":"H","xpos":1,"ypos":1,"electronic_configuration":"1s¹"},{"name":"Гелій","atomic_mass":4.002602,"boil":4.22,"category":"інертний газ","number":2,"symbol":"He","xpos":18,"ypos":1,"electronic_configuration":"1s²"},{"name":"Літій","atomic_mass":6.94,"boil":71, "category": "двоатомний неметал", "number": 1, "symbol": "H", "xpos": 1, "ypos": 1, "electronic_configuration": "1s¹"},
+            {"name": "Гелій", "atomic_mass": 4.002602, "boil": 4.22, "category": "інертний газ", "number":1615,"category":"лужний метал","number":3,"symbol":"Li","xpos":1,"ypos":2,"electronic_configuration":"[He] 2s¹"},{"name":"Берилій","atomic_mass":9.012183,"boil":2742,"category":"лужноземельний метал","number":4,"symbol":"Be","xpos":2,"ypos":2,"electronic_configuration":"[He] 2s²"},{"name":"Бор","atomic_mass":10.81,"bo 2, "symbol": "He", "xpos": 18, "ypos": 1, "electronic_configuration": "1s²"},
+            {"name": "Літій", "atomic_mass": 6.94, "boil": 1615, "category": "лужний метал", "number": 3, "symbol": "Li", "xpos": 1, "ypos": 2, "electronic_configuration": "[He] 2s¹"},
+            {"name": "Берилій", "il":4200,"category":"металоїд","number":5,"symbol":"B","xpos":13,"ypos":2,"electronic_configuration":"[He] 2s² 2p¹"},{"name":"Карбон","atomic_mass":12.011,"boil":5100,"category":"поліатомний неметал","number":6,"symbol":"C","xpos":14,"yposatomic_mass": 9.012183, "boil": 2742, "category": "лужноземельний метал", "number": 4, "symbol": "Be", "xpos": 2, "ypos": 2, "electronic_configuration": "[He] 2s²"},
+            {"name": "Бор", "atomic_mass": 10.81, "bo":2,"electronic_configuration":"[He] 2s² 2p²"},{"name":"Нітроген","atomic_mass":14.007,"boil":77.355,"category":"двоатомний неметал","number":7,"symbol":"N","xpos":15,"ypos":2,"electronic_configuration":"[He] 2s² 2p³"},{"name":"Оксигенil": 4200, "category": "металоїд", "number": 5, "symbol": "B", "xpos": 13, "ypos": 2, "electronic_configuration": "[He] 2s² 2p¹"},
+            {"name": "Карбон", "atomic_mass": 12.011, "boil": 5100, "category","atomic_mass":15.999,"boil":90.188,"category":"двоатомний неметал","number":8,"symbol":"O","xpos":16,"ypos":2,"electronic_configuration":"[He] 2s² 2p⁴"},{"name":"Флуор","atomic_mass":18.998403,"boil":85.03": "поліатомний неметал", "number": 6, "symbol": "C", "xpos": 14, "ypos": 2, "electronic_configuration": "[He] 2s² 2p²"},
+            {"name": "Нітроген", "atomic_mass": 14.007, "boil": 77.355, "category": "двоатомний неме,"category":"двоатомний неметал","number":9,"symbol":"F","xpos":17,"ypos":2,"electronic_configuration":"[He] 2s² 2p⁵"},{"name":"Неон","atomic_mass":20.17976,"boil":27.104,"category":"інертний газ","number":10,"symbol":"Ne","xpos":18,"ypos":2,"electronic_configuration":"[He] 2s² 2p⁶"},{"name":"Натрій","atomicтал", "number": 7, "symbol": "N", "xpos": 15, "ypos": 2, "electronic_configuration": "[He] 2s² 2p³"},
+            {"name": "Оксиген", "atomic_mass": 15.999, "boil": 90.188, "category": "двоатомний неметал", "number": _mass":22.989769,"boil":1156.09,"category":"лужний метал","number":11,"symbol":"Na","xpos":1,"ypos":3,"electronic_configuration":"[Ne] 3s¹"},{"name":"Магній","atomic_mass":24.305,"boil":1363,"category":"лужноземельний метал","number":12,"symbol8, "symbol": "O", "xpos": 16, "ypos": 2, "electronic_configuration": "[He] 2s² 2p⁴"},
+            {"name": "Флуор", "atomic_mass": 18.998403, "boil": 85.03, "category": "двоатомний неметал", "number": 9, "symbol": "F", "xpos": 17, "ypos": 2, "electronic_configuration": "[He] ":"Mg","xpos":2,"ypos":3,"electronic_configuration":"[Ne] 3s²"},{"name":"Алюміній","atomic_mass":26.981538,"boil":2743,"category":"постперехідний метал","number":13,"symbol":"Al","xpos":13,"ypos":3,"electronic_configuration":"[Ne] 3s² 3p¹2s² 2p⁵"},
+            {"name": "Неон", "atomic_mass": 20.17976, "boil": 27.104, "category": "інертний газ", "number": 10, "symbol": "Ne", "xpos": 18, "y"},{"name":"Силіцій","atomic_mass":28.085,"boil":3265,"category":"металоїд","number":14,"symbol":"Si","xpos":14,"ypos": 2, "electronic_configuration": "[He] 2s² 2p⁶"},
+            {"name": "Натрій", "atomic_mass": 22.989769, "boil": 1156.09, "category": "лужний метал", "number": 11, "symbol": "Na", "xpos": 1, "ypos": 3, "electronic_configuration":pos":3,"electronic_configuration":"[Ne] 3s² 3p²"},{"name":"Фосфор","atomic_mass":30.973762,"boil":553.7,"category":"поліатомний неметал","number":15,"symbol":"P","xpos":15,"ypos":3,"electronic_configuration":"[Ne] 3s² 3p³"},{" "[Ne] 3s¹"},
+            {"name": "Магній", "atomic_mass": 24.305, "boil": 1363, "category": "лужноземельний метал", "number": 12, "symbol": "Mg", "xpos": 2, "ypos": 3, "electronic_configuration": "[Ne] 3s²"},
+            {"name": "Алюміній", "atomic_mass": 26.981538, "name":"Сульфур","atomic_mass":32.06,"boil":717.8,"category":"поліатомний неметал","number":16,"symbol":"S","xpos":16,"ypos":3,"electronic_configuration":"[Ne] 3s² 3p⁴"},{"name":"Хлор","atomic_mass":35.45,"boil":239.11,"category":"дboil": 2743, "category": "постперехідний метал", "number": 13, "symbol": "Al", "xpos": 13, "ypos": 3, "electronic_configuration": "[Ne] 3s² 3p¹"},
+            {"name": "Силіцій", "atomic_mass": 28.085, "boil": 326воатомний неметал","number":17,"symbol":"Cl","xpos":17,"ypos":3,"electronic_configuration":"[Ne] 3s² 3p⁵"},{"name":"Аргон","atomic_mass":39.9481,"boil":87.302,"category":"інертний газ","number":18,"symbol":"Ar","xpos":18,"ypos":3,"electronic_configuration":"[Ne] 3s² 3p⁶"},{"name":"Калій","atomic_5, "category": "металоїд", "number": 14, "symbol": "Si", "xpos": 14, "ypos": 3, "electronic_configuration": "[Ne] 3s² 3p²"},
+            {"name": "Фосфор", "atomic_mass": 30.973762, "boil": 553.7, "category": "поліmass":39.09831,"boil":1032,"category":"лужний метал","number":19,"symbol":"K","xpos":1,"ypos":4,"electronic_configuration":"[Ar] 4s¹"},{"name":"Кальцій","atomic_mass":40.0784,"boil":1757,"category":"лужноземельний метал","number":20,"symbolатомний неметал", "number": 15, "symbol": "P", "xpos": 15, "ypos": 3, "electronic_configuration": "[Ne] 3s² 3p³"},
+            {"name": "Сульфур", "atomic_mass": 32.06, "boil": 717.8, "category": "поліатомний неметал",":"Ca","xpos":2,"ypos":4,"electronic_configuration":"[Ar] 4s²"},{"name":"Скандій","atomic_mass":44.955908,"boil":3109,"category":"перехідний метал","number":21,"symbol":"Sc","xpos":3,"ypos":4,"electronic_configuration":"[Ar] 3d¹ 4s²"},{"name":"Титан "number": 16, "symbol": "S", "xpos": 16, "ypos": 3, "electronic_configuration": "[Ne] 3s² 3p⁴"},
+            {"name": "Хлор", "atomic_mass": 35.45, "boil": 239.11, "category": "двоатомний неметал", "number": 17, "","atomic_mass":47.8671,"boil":3560,"category":"перехідний метал","number":22,"symbol":"Ti","xpos":4,"ypos":4,"electronic_configuration":"[Ar] 3d² 4s²"},{"name":"Ванадій","atomic_mass":50.94151,"boil":3680,"category":"перехідний металsymbol": "Cl", "xpos": 17, "ypos": 3, "electronic_configuration": "[Ne] 3s² 3p⁵"},
+            {"name": "Аргон", "atomic_mass": 39.9481, "boil": 87.302, "category": "інертний газ", "number": 18, "symbol": "Ar", "xpos": 18, "ypos": 3, "electronic_configuration": "[Ne] 3s","number":23,"symbol":"V","xpos":5,"ypos":4,"electronic_configuration":"[Ar] 3d³ 4s²"},{"name":"Хром","atomic_mass":51.99616,"boil":2944,"category":"перехідний метал","number":24,"symbol":"Cr","xpos":6,"ypos":4,"electronic_configuration":"[Ar] 3d⁵ 4s¹"},{"name":"Манган","atomic_mass":54.938044² 3p⁶"},
+            {"name": "Калій", "atomic_mass": 39.09831, "boil": 1032, "category": "лужний метал", "number": 19, "symbol": "K", "xpos": 1, "ypos": 4, "electronic_configuration": "[Ar] 4s¹"},
+            {"name": "Кальцій", "atomic_mass": 40.0784, "boil": 1757, "category": "лу,"boil":2334,"category":"перехідний метал","number":25,"symbol":"Mn","xpos":7,"ypos":4,"electronic_configuration":"[Ar] 3d⁵ 4s²"},{"name":"Ферум","atomic_mass":55.8452,"boil":3134,"category":"перехідний метал","number":26,"symbol":"Fe","xpos":8,"жноземельний метал", "number": 20, "symbol": "Ca", "xpos": 2, "ypos": 4, "electronic_configuration": "[Ar] 4s²"},
+            {"name": "Скандій", "atomic_mass": 44.955908, "ypos":4,"electronic_configuration":"[Ar] 3d⁶ 4s²"},{"name":"Кобальт","atomic_mass":58.933194,"boil":3200,"category":"перехідний метал","number":27,"symbol":"Co","xpos":9,"ypos":4,"electronic_configuration":"[Ar] 3d⁷ 4s²"},{"name":"Нікель","atomicboil": 3109, "category": "перехідний метал", "number": 21, "symbol": "Sc", "xpos": 3, "ypos": 4, "electronic_configuration": "[_mass":58.69344,"boil":3003,"category":"перехідAr] 3d¹ 4s²"},
+            {"name": "Титан", "atomic_mass": 47.8671, "boil": 3560, "category": "перехідний метал", "number": 22, "symbol": "Ti", "xpos": 4ний метал","number":28,"symbol":"Ni","xpos":10,"ypos":4,"electronic_configuration":"[Ar] 3d⁸ 4s²"},{"name":"Купрум","atomic_mass":63.5463,"boil":2835,"category":"перехідний метал","number":29,"symbol":"Cu","xpos":11,"ypos":4,"electronic_configuration":"[Ar] 3, "ypos": 4, "electronic_configuration": "[Ar] 3d² 4s²"},
+            {"name": "Ванадій", "atomic_mass": 50.9415d¹⁰ 4s¹"},{"name":"Цинк","atomic_mass":65.382,"boil":1180,"category":"постперехідний метал","number":30,"symbol":"Zn","xpos":12,"ypos":4,"electronic_configuration":"[Ar] 3d¹⁰ 4s²"},{"name":"Галій","atomic_mass":69.7231,"boil":261, "boil": 3680, "category": "перехідний метал", "number": 23, "symbol": "V", "xpos": 5, "ypos": 4, "electronic_configuration": "[Ar] 3d³ 4s²"},
+            {"name": "Хром", "atomic_mass": 51.99616, "boil": 2973,"category":"постперехідний метал","number":31,"symbol":"Ga","xpos":13,"ypos":4,"electronic_configuration":"[Ar] 3d¹⁰ 4s² 4p¹"},{"name":"Германій","atomic_mass":72.6308,"boil44, "category": "перехідний метал", "number": 24, "symbol": "Cr", "xpos": 6, "ypos": 4, "electronic_configuration": "[Ar] 3d⁵ 4s¹"},
+            {"name": "Манган", "atomic_mass": 54.938044, "boil": 2334, "category": "перехідний":3106,"category":"металоїд","number":32,"symbol":"Ge","xpos":14,"ypos":4,"electronic_configuration":"[Ar] 3d¹⁰ 4s² 4p²"},{"name":"Арсен","atomic_mass":74.921595,"boil": метал", "number": 25, "symbol": "Mn", "xpos": 7, "ypos": 4, "electronic_configuration": "[Ar] 3d⁵ 4s²"},
+            {"name": "Ферум", "atomic_mass": 55.8452, "boil": 3134, "category": "перехідний метал", "number": 26,887,"category":"металоїд","number":33,"symbol":"As","xpos":15,"ypos":4,"electronic_configuration":"[Ar] 3d¹⁰ 4s² 4p³"},{"name":"Селен","atomic_mass":78.9718,"boil":9 "symbol": "Fe", "xpos": 8, "ypos": 4, "electronic_configuration": "[Ar] 3d⁶ 4s²"},
+            {"name": "Кобальт", "atomic_mass": 58.933194, "boil": 3200, "category58,"category":"поліатомний неметал","number":34,"symbol":"Se","xpos":16,"ypos":4,"electronic_configuration":"[Ar] 3d¹⁰ 4s² ": "перехідний метал", "number": 27, "symbol": "Co", "xpos": 9, "ypos": 4, "electronic_configuration": "[Ar] 3d⁷ 4s²"},
+            {"name": "Нікель", "atomic_mass": 58.69344, "boil": 3003, "category": "перехідний метал", "number": 28, "symbol": "Ni", "xpos": 10, "ypos": 4, "electronic_configuration": "[Ar] 3d⁸ 4s²"},
+            {"4p⁴"},{"name":"Бром","atomic_mass":79.904,"boil":332,"category":"двоатомний неметал","number":35,"symbol":"Br","xpos":17,"ypos":4,"electronic_configuration":"[Ar] 3d¹⁰ 4s² 4p⁵"},{"name":"Криптон","atomic_mass":83.7982,"boil":119.93,"category":"інертний газ","number":36,"symbol":"Kr","xpos":18,"ypos":4,"electronic_configuration":"[Ar] 3d¹⁰ 4name": "Купрум", "atomic_mass": 63.5463, "boil": 2835, "category": "перехідний метал", "number": 29, "symbol": "Cu", "xpos": 11, "ypos": 4, "electronic_configuration": "[Ar] 3d¹⁰ 4s¹"},
+            {"name": "Цинк", "atomic_mass": 65.382, "boil": 1180, "category": "постперехідs² 4p⁶"}];
+
+        const categoryColors = { 'двоатомний неметал': '#90EE90', 'поліатомний неметал': '#90EE90', 'інертний газ': '#C8A2C8', 'лужний метал': '#FF6347', 'лужноземельний метал': '#FFD700', 'металоїд': '#A52A2A', 'постперехідний метал': '#B0C4DE', 'ний метал", "number": 30, "symbol": "Zn", "xpos": 12, "ypos": 4, "electronic_configuration": "[Ar] 3d¹⁰ 4s²"},
+            {"name": "Галій", "atomic_mass": 69.7231, "boil": 2673, "category": "постперехідний метал", "number": 31перехідний метал': '#ADD8E6'};
         
         AFRAME.registerComponent('periodic-table-generator', {
             init: function() {
                 const tableContainer = this.el;
+                const infoCard = document.getElementById('info-card');
+
+                // Отримуємо доступ до полів картки один раз
+                const infoNumber = document.getElementById('info-number');
+                const infoSymbol = document.getElementById('info-symbol, "symbol": "Ga", "xpos": 13, "ypos": 4, "electronic_configuration": "[Ar] 3d¹⁰ 4s² 4p¹"},
+            {"name');
+                const infoName = document.getElementById('info-name');
+                const infoDetails = document.getElementById('info-details');
+
+                // Функція для створення кубика
+                function createTile(elementData) {
+                    const box = document.createElement('a-entity');
+                    box.setAttribute('mixin', 'element-": "Германій", "atomic_mass": 72.6308, "boil": 3106, "category": "металоїд", "number": 32, "symbol": "Ge", "xpos": 14, "ypos": 4, "electronic_configuration": "[Ar] 3d¹⁰ 4s² 4p²"},
+            {"name": "box');
+                    box.classList.add('clickable');
+                    const xPos = (elementData.xpos - 1) * 1.2;
+                    const yPos = -(elementData.ypos - 1) * 1.2;
+                    box.setAttribute('position', `${xPos} ${yPos} 0`);
+                    box.setAttribute('material', 'color', categoryColors[elementData.category] || '#FFF');
+                    box.dataset.elementInfo = JSON.stringify(elementData);
+
+                    // ВИПРАВЛЕНО: ДодаАрсен", "atomic_mass": 74.921595, "boil": 887, "category": "металоїд", "number": 33, "symbol": "As", "xpos": 15, "ypos": 4, "electronic_configuration": "[Ar] 3d¹⁰ 4s² 4p³"},
+            {"name": "Селен", "atomic_mass": 78.9718, "boil": 958, "category":ємо текст до кубика
+                    const symbolText = document.createElement('a-text');
+                    symbolText.setAttribute('value', elementData.symbol);
+                    symbolText.setAttribute('align', 'center');
+                    symbolText.setAttribute('position', '0 0 0.6');
+                    symbolText.setAttribute('color', '#000');
+                    symbolText.setAttribute('width', 5);
+                    box.appendChild(symbolText); "поліатомний неметал", "number": 34, "symbol": "Se", "xpos": 16, "ypos": 4, "electronic_configuration": "[Ar] 3d¹⁰ 4s² 4p⁴"},
+            {"name": "Бром", "atomic_mass": 79.904, "boil": 332, "category": "д // Цей рядок був відсутній
+                    
+                    return box;
+                }
+
+                // Створюємо всі плитки
+                elementsData.forEach(elementData => {
+                    const tile = createTile(elementData);
+                    tableContainer.appendChild(tile);
+                });
+
+                // Функція для оновлення інфо-кавоатомний неметал", "number": 35, "symbol": "Br", "xpos": 17, "ypos": 4, "electronic_configuration": "[Ar] 3d¹⁰ 4s² 4p⁵"},
+            {"name": "Криптон", "atomic_mass": 83.7982, "boil": 119.93, "category": "інертний газ", "number": 36, "symbol": "Kr", "xртки
+                function updateInfoCard(elementData) {
+                    infoCard.setAttribute('visible', true);
+                    infoNumber.setAttribute('value', elementData.number);
+                    infoSymbol.setAttribute('value', elementData.symbol);
+                    infoName.setAttribute('value', elementData.name);
+                    const tempK = elementData.boil ? `${elementData.boil} K` : 'Н/Д';
+                    const tempC = elementData.pos": 18, "ypos": 4, "electronic_configuration": "[Ar] 3d¹⁰ 4s² 4p⁶"}
+        ];
+
+        const categoryColors = { 'двоатомний неметал': '#90EE90', 'поліатомний неметал': '#90boil ? `${(elementData.boil - 273.15).toFixed(2)} °C` : 'Н/Д';
+                    const electronConfig = elementData.electronic_configuration || 'Н/Д';
+                    const detailsText = `Атомна маса: ${elementData.atomic_mass.toFixed(4)}\n` + `Категорія: ${elementData.category}\n\n` + `Температура кипіння: ${tempKEE90', 'інертний газ': '#C8A2C8', 'лужний метал': '#FF6347', 'лужноземельний метал': '#FFD700', 'металоїд': '#A52A2A', 'постперехідний метал': '#B0C4DE', 'перехідний метал': '#ADD8E6'};
+        
+        AFRAME.registerComponent('periodic-table-generator', {
+            init: function() {
+                const tableContainer = this.el;} / ${tempC}\n\n` + `Ел. конфігурація: ${electronConfig}`;
+                    infoDetails.setAttribute('value', detailsText);
+                }
+                
+                // ОНОВЛЕНА ЛОГІКА ВЗАЄМОДІЇ
+                this.el.sceneEl.addEventListener('
 
                 function createTile(elementData) {
                     const box = document.createElement('a-entity');
@@ -98,13 +209,30 @@
                     box.classList.add('clickable');
                     const xPos = (elementData.xpos - 1) * 1.2;
                     const yPos = -(elementData.ypos - 1) * 1.2;
-                    box.setAttribute('position', `${xPos} ${yPos} 0`);
+                    box.setAttribute('click', function(event) {
+                    const target = event.target;
+                    // Клік по елементу
+                    if (target.dataset.elementInfo) {
+                        const info = JSON.parse(target.dataset.elementInfo);
+                        updateInfoCard(info);
+                    }
+                    // Клік по кнопці прогнозу
+                    if (target.id === 'predict-button' || target.parentElement.id === 'predict-button')position', `${xPos} ${yPos} 0`);
                     box.setAttribute('material', 'color', categoryColors[elementData.category] || '#FFF');
                     box.dataset.elementInfo = JSON.stringify(elementData);
                     const symbolText = document.createElement('a-text');
                     symbolText.setAttribute('value', elementData.symbol);
                     symbolText.setAttribute('align', 'center');
-                    symbolText.setAttribute('position', '0 0 0.6');
+                    symbolText {
+                        predictNextElement();
+                    }
+                });
+
+                // Функція прогнозування
+                function predictNextElement() {
+                    if (document.getElementById('predicted-37')) return;
+                    const lastElement = elementsData.find(el => el.number === 36);
+                    const predictedElement = { number: 37, symbol: 'Rb', name: 'Рубідій (Прогноз)', category: 'лу.setAttribute('position', '0 0 0.6');
                     symbolText.setAttribute('color', '#000');
                     symbolText.setAttribute('width', 5);
                     box.appendChild(symbolText);
@@ -116,7 +244,10 @@
                     tableContainer.appendChild(tile);
                 });
 
-                function updateInfoCard(elementData) {
+                function updateInfoжний метал', atomic_mass: lastElement.atomic_mass + 1.67, boil: 961, xpos: 1, ypos: 5, electronic_configuration: '[Kr] 5s¹' };
+                    const predictedTile = createTile(predictedElement);
+                    predictedTile.id = 'predicted-37';
+                    predictedTile.setAttribute('material', 'emissive', categoryColors['лужний метал'],Card(elementData) {
                     const infoNumber = document.getElementById('info-number');
                     const infoSymbol = document.getElementById('info-symbol');
                     const infoName = document.getElementById('info-name');
@@ -126,40 +257,7 @@
                     infoSymbol.setAttribute('value', elementData.symbol);
                     infoName.setAttribute('value', elementData.name);
                     
-                    const tempK = elementData.boil ? `${elementData.boil} K` : 'Н/Д';
-                    const tempC = elementData.boil ? `${(elementData.boil - 273.15).toFixed(2)} °C` : 'Н/Д';
-                    
-                    const electronConfig = elementData.electronic_configuration || 'Н/Д';
-                    
-                    const detailsText = 
-                        `Атомна маса: ${elementData.atomic_mass.toFixed(4)}\n` +
-                        `Категорія: ${elementData.category}\n\n` +
-                        `Температура кипіння: ${tempK} / ${tempC}\n\n` +
-                        `Ел. конфігурація: ${electronConfig}`;
-                    
-                    infoDetails.setAttribute('value', detailsText);
-                }
-
-                this.el.sceneEl.addEventListener('click', function(event) {
-                    const target = event.target;
-                    if (target.dataset.elementInfo) {
-                        const info = JSON.parse(target.dataset.elementInfo);
-                        updateInfoCard(info);
-                    }
-                    if (target.id === 'predict-button' || target.parentElement.id === 'predict-button') {
-                        predictNextElement();
-                    }
-                });
-
-                function predictNextElement() {
-                    if (document.getElementById('predicted-37')) return;
-                    const lastElement = elementsData.find(el => el.number === 36);
-                    
-                    const predictedElement = { number: 37, symbol: 'Rb', name: 'Рубідій (Прогноз)', category: 'лужний метал', atomic_mass: lastElement.atomic_mass + 1.67, boil: 961, xpos: 1, ypos: 5, electronic_configuration: '[Kr] 5s¹' };
-                    
-                    const predictedTile = createTile(predictedElement);
-                    predictedTile.id = 'predicted-37';
-                    predictedTile.setAttribute('material', 'emissive', categoryColors['лужний метал'], 'emissiveIntensity', 0.5);
+                    const tempK = elementData.boil ? 'emissiveIntensity', 0.5);
                     tableContainer.appendChild(predictedTile);
                     updateInfoCard(predictedElement);
                 }
