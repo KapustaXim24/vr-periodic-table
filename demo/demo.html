@@ -4,9 +4,11 @@
     <meta charset="utf-8">
     <title>Final VR Periodic Table</title>
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <!-- ПІДКЛЮЧАЄМО GOOGLE FONT ДЛЯ КОРЕКТНОЇ ПІДТРИМКИ КИРИЛИЦІ -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <a-scene vr-mode-ui="enabled: true" background="color: #111" cursor="rayOrigin: mouse; fusing: false">
+    <a-scene vr-mode-ui="enabled: true" background="color: #111">
         
         <a-assets>
             <a-mixin id="element-box"
@@ -20,26 +22,28 @@
         <a-light type="ambient" color="#AAA"></a-light>
         <a-light type="directional" position="-1 1 2" intensity="0.8"></a-light>
         
-        <a-entity position="0 0 -2">
-
-            <a-entity id="periodic-table-container" position="-10.5 4 -8" periodic-table-generator></a-entity>
+        <!-- СЦЕНА ПЕРЕМІЩЕНА ЩЕ БЛИЖЧЕ -->
+        <a-entity position="0 0 -1">
+            <a-entity id="periodic-table-container" position="-10.5 4 -6" periodic-table-generator></a-entity>
             
-            <a-entity id="info-card" position="0 8.5 -9" visible="false">
-                <a-plane width="7.5" height="5.5" color="#222" material="opacity: 0.85"></a-plane>
-                <a-text id="info-number" value="" color="#FFF" width="8" align="left" position="-3.4 2.2 0.1"></a-text>
-                <a-text id="info-symbol" value="" color="#FFF" width="15" align="center" position="-0.5 1.0 0.1"></a-text>
-                <a-text id="info-name" value="" color="#FFF" width="6" align="center" position="-0.5 -0.2 0.1"></a-text>
-                <a-text id="info-details" value="" color="#DDD" width="6.5" align="left" wrap-count="45" position="-3.4 -1.2 0.1"></a-text>
+            <a-entity id="info-card" position="0 8 -6" visible="true">
+                <a-plane width="8" height="6" color="#222" material="opacity: 0.85"></a-plane>
+                <!-- Додано font: 'Roboto' до всіх текстових полів -->
+                <a-text id="info-number" value="" color="#FFF" font="Roboto" width="12" align="left" position="-3.6 2.4 0.1"></a-text>
+                <a-text id="info-symbol" value="?" color="#FFF" font="Roboto" width="25" align="center" position="-0.5 1.2 0.1"></a-text>
+                <a-text id="info-name" value="Періодична Таблиця" color="#FFF" font="Roboto" width="8" align="center" position="-0.5 -0.1 0.1"></a-text>
+                <a-text id="info-details" value="Наведіть та клікніть на елемент." color="#DDD" font="Roboto" width="7" align="left" wrap-count="60" position="-3.6 -1.2 0.1"></a-text>
             </a-entity>
 
-            <a-entity id="predict-button" class="clickable" geometry="primitive: box; width: 3; height: 0.5; depth: 0.2"
-                      material="color: #40E0D0" position="0 -1.5 -6">
-                <a-text value="Прогноз Елемента 37" align="center" color="#000" width="4" position="0 0 0.15"></a-text>
+            <a-entity id="predict-button" class="clickable" geometry="primitive: box; width: 3; height: 0.5; depth: 0.2" material="color: #40E0D0" position="0 -2 -4">
+                <a-text value="Прогноз Елемента 37" align="center" font="Roboto" color="#000" width="4" position="0 0 0.15"></a-text>
             </a-entity>
-
         </a-entity>
         
-        <a-camera position="0 1.6 4"></a-camera>
+        <!-- Повертаємо камеру з центральним курсором для надійності -->
+        <a-camera position="0 1.6 0" look-controls>
+            <a-cursor raycaster="objects: .clickable"></a-cursor>
+        </a-camera>
     </a-scene>
     
     <script>
@@ -87,11 +91,6 @@
         AFRAME.registerComponent('periodic-table-generator', {
             init: function() {
                 const tableContainer = this.el;
-                const infoCard = document.getElementById('info-card');
-                const infoNumber = document.getElementById('info-number');
-                const infoSymbol = document.getElementById('info-symbol');
-                const infoName = document.getElementById('info-name');
-                const infoDetails = document.getElementById('info-details');
 
                 function createTile(elementData) {
                     const box = document.createElement('a-entity');
@@ -120,17 +119,29 @@
                 });
 
                 function updateInfoCard(elementData) {
-                    infoCard.setAttribute('visible', true);
+                    const infoNumber = document.getElementById('info-number');
+                    const infoSymbol = document.getElementById('info-symbol');
+                    const infoName = document.getElementById('info-name');
+                    const infoDetails = document.getElementById('info-details');
+                    
                     infoNumber.setAttribute('value', elementData.number);
                     infoSymbol.setAttribute('value', elementData.symbol);
                     infoName.setAttribute('value', elementData.name);
+                    
                     const tempK = elementData.boil ? `${elementData.boil} K` : 'Н/Д';
                     const tempC = elementData.boil ? `${(elementData.boil - 273.15).toFixed(2)} °C` : 'Н/Д';
+                    
                     const electronConfig = elementData.electronic_configuration || 'Н/Д';
-                    const detailsText = `Атомна маса: ${elementData.atomic_mass.toFixed(4)}\n` + `Категорія: ${elementData.category}\n\n` + `Температура кипіння: ${tempK} / ${tempC}\n\n` + `Ел. конфігурація: ${electronConfig}`;
+                    
+                    const detailsText = 
+                        `Атомна маса: ${elementData.atomic_mass.toFixed(4)}\n` +
+                        `Категорія: ${elementData.category}\n\n` +
+                        `Температура кипіння: ${tempK} / ${tempC}\n\n` +
+                        `Ел. конфігурація: ${electronConfig}`;
+                    
                     infoDetails.setAttribute('value', detailsText);
                 }
-                
+
                 this.el.sceneEl.addEventListener('click', function(event) {
                     const target = event.target;
                     if (target.dataset.elementInfo) {
@@ -145,7 +156,9 @@
                 function predictNextElement() {
                     if (document.getElementById('predicted-37')) return;
                     const lastElement = elementsData.find(el => el.number === 36);
+                    
                     const predictedElement = { number: 37, symbol: 'Rb', name: 'Рубідій (Прогноз)', category: 'лужний метал', atomic_mass: lastElement.atomic_mass + 1.67, boil: 961, xpos: 1, ypos: 5, electronic_configuration: '[Kr] 5s¹' };
+                    
                     const predictedTile = createTile(predictedElement);
                     predictedTile.id = 'predicted-37';
                     predictedTile.setAttribute('material', 'emissive', categoryColors['лужний метал'], 'emissiveIntensity', 0.5);
