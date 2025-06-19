@@ -6,7 +6,6 @@
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
 </head>
 <body>
-    <!-- ПОВЕРТАЄМО КЕРУВАННЯ МИШКОЮ -->
     <a-scene vr-mode-ui="enabled: true" background="color: #111" cursor="rayOrigin: mouse; fusing: false">
         
         <a-assets>
@@ -21,17 +20,18 @@
         <a-light type="ambient" color="#AAA"></a-light>
         <a-light type="directional" position="-1 1 2" intensity="0.8"></a-light>
         
-        <!-- СЦЕНА БЛИЗЬКО І ЗРУЧНО -->
-        <a-entity position="0 0 -2">
+        <!-- ОСТАТОЧНА ЗМІНА: position="0 1.6 -1" -->
+        <!-- Це підніме всю сцену на рівень очей і наблизить її ще на 1 метр -->
+        <a-entity position="0 1.6 -1">
 
             <a-entity id="periodic-table-container" position="-10.5 4 -8" periodic-table-generator></a-entity>
             
-            <a-entity id="info-card" position="0 8.5 -9" visible="true">
+            <a-entity id="info-card" position="0 8.5 -9" visible="false">
                 <a-plane width="7.5" height="5.5" color="#222" material="opacity: 0.85"></a-plane>
                 <a-text id="info-number" value="" color="#FFF" width="8" align="left" position="-3.4 2.2 0.1"></a-text>
-                <a-text id="info-symbol" value="?" color="#FFF" width="15" align="center" position="-0.5 1.0 0.1"></a-text>
-                <a-text id="info-name" value="Periodic Table" color="#FFF" width="6" align="center" position="-0.5 -0.2 0.1"></a-text>
-                <a-text id="info-details" value="Point and click on an element to see details." color="#DDD" width="6.5" align="left" wrap-count="45" position="-3.4 -1.2 0.1"></a-text>
+                <a-text id="info-symbol" value="" color="#FFF" width="15" align="center" position="-0.5 1.0 0.1"></a-text>
+                <a-text id="info-name" value="" color="#FFF" width="6" align="center" position="-0.5 -0.2 0.1"></a-text>
+                <a-text id="info-details" value="" color="#DDD" width="6.5" align="left" wrap-count="45" position="-3.4 -1.2 0.1"></a-text>
             </a-entity>
 
             <a-entity id="predict-button" class="clickable" geometry="primitive: box; width: 3; height: 0.5; depth: 0.2"
@@ -41,12 +41,10 @@
 
         </a-entity>
         
-        <!-- Камера без look-controls, бо керування йде від курсора сцени -->
         <a-camera position="0 1.6 4"></a-camera>
     </a-scene>
     
     <script>
-        // ДАНІ АНГЛІЙСЬКОЮ МОВОЮ
         const elementsData = [
             {"name": "Hydrogen", "atomic_mass": 1.008, "boil": 20.271, "category": "diatomic nonmetal", "number": 1, "symbol": "H", "xpos": 1, "ypos": 1, "electronic_configuration": "1s¹"},
             {"name": "Helium", "atomic_mass": 4.002602, "boil": 4.22, "category": "noble gas", "number": 2, "symbol": "He", "xpos": 18, "ypos": 1, "electronic_configuration": "1s²"},
