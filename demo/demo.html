@@ -20,18 +20,16 @@
         <a-light type="ambient" color="#AAA"></a-light>
         <a-light type="directional" position="-1 1 2" intensity="0.8"></a-light>
         
-        <!-- Розташування, як на скріншоті, який вам сподобався -->
-        <a-entity id="periodic-table-container" position="-10.5 4 -8"></a-entity>
+        <a-entity id="periodic-table-container" position="-10.5 4 -8" periodic-table-generator></a-entity>
         
         <a-entity id="info-card" position="0 7 -8" visible="true">
             <a-plane width="7.5" height="6" color="#222" material="opacity: 0.85"></a-plane>
-            <a-text id="info-number" value="" color="#FFF" width="8" align="left" position="-3.4 2.4 0.1"></a-text>
-            <a-text id="info-symbol" value="?" color="#FFF" width="15" align="center" position="-0.5 1.2 0.1"></a-text>
-            <a-text id="info-name" value="Periodic Table" color="#FFF" width="6" align="center" position="-0.5 -0.1 0.1"></a-text>
-            <a-text id="info-details" value="Point and click on an element or use the controls below." color="#DDD" width="7" align="left" wrap-count="50" position="-3.4 -1.2 0.1"></a-text>
+            <a-text id="info-number" value="" color="#FFF" width="8" align="left" position="-3.4 2.5 0.1"></a-text>
+            <a-text id="info-symbol" value="?" color="#FFF" width="15" align="center" position="-0.5 1.3 0.1"></a-text>
+            <a-text id="info-name" value="Periodic Table" color="#FFF" width="6" align="center" position="-0.5 0.1 0.1"></a-text>
+            <a-text id="info-details" value="Point and click on an element to see details." color="#DDD" width="7" align="left" wrap-count="50" position="-3.4 -0.8 0.1"></a-text>
         </a-entity>
 
-        <!-- Нові кнопки для візуалізації трендів -->
         <a-entity id="controls-panel" position="0 -2.5 -6">
             <a-entity id="radius-trend-btn" class="clickable" geometry="primitive: box; width: 2.2; height: 0.5; depth: 0.2" material="color: #6c5ce7" position="-3 0 0">
                 <a-text value="Radius Trend" align="center" color="#FFF" width="3" position="0 0 0.1"></a-text>
@@ -44,13 +42,11 @@
             </a-entity>
         </a-entity>
 
-        <!-- Кнопка для ML прогнозування -->
         <a-entity id="predict-button" class="clickable" geometry="primitive: box; width: 3; height: 0.5; depth: 0.2"
                   material="color: #40E0D0" position="0 -3.5 -6">
             <a-text value="Predict Element 37" align="center" color="#000" width="4" position="0 0 0.1"></a-text>
         </a-entity>
 
-        <!-- Камера з керуванням мишкою -->
         <a-camera position="0 1.6 0"></a-camera>
     </a-scene>
     
@@ -127,7 +123,7 @@
                 return box;
             }
 
-            function updateInfoCard(elementData) {
+            function updateInfoCard(elementData, predictionLogic = "") {
                 infoNumber.setAttribute('value', elementData.number);
                 infoSymbol.setAttribute('value', elementData.symbol);
                 infoName.setAttribute('value', elementData.name);
@@ -137,19 +133,24 @@
                 
                 const electronConfig = elementData.electronic_configuration || 'N/A';
                 
-                const detailsText = 
+                let detailsText = 
                     `Atomic Mass: ${elementData.atomic_mass.toFixed(4)}\n` +
                     `Atomic Radius: ${elementData.atomic_radius} pm\n` +
                     `Category: ${elementData.category}\n\n` +
                     `Boiling Point: ${tempK} / ${tempC}\n\n` +
                     `Configuration: ${electronConfig}`;
                 
+                // ВИПРАВЛЕНО: Додаємо текст прогнозу на новий рядок
+                if (predictionLogic) {
+                    detailsText = `${predictionLogic}\n\n${detailsText}`;
+                }
+                
                 infoDetails.setAttribute('value', detailsText);
             }
 
             document.querySelector('a-scene').addEventListener('click', function(event) {
                 const target = event.target;
-                if (target.dataset.elementInfo) {
+                if (target.classList.contains('clickable') && target.dataset.elementInfo) {
                     infoCard.setAttribute('visible', true);
                     const info = JSON.parse(target.dataset.elementInfo);
                     updateInfoCard(info);
@@ -159,23 +160,23 @@
             document.querySelector('#predict-button').addEventListener('click', function() {
                 if (document.getElementById('predicted-37')) return;
                 const lastElement = elementsData.find(el => el.number === 36);
-                const predictedElement = { number: 37, symbol: 'Rb', name: 'Rubidium (Predicted)', category: 'alkali metal', atomic_mass: lastElement.atomic_mass + 1.67, boil: 961, xpos: 1, ypos: 5, electronic_configuration: '[Kr] 5s¹', atomic_radius: 211, electronegativity: 0.82 };
+                const predictedElement = { number: 37, symbol: 'Rb', name: 'Rubidium', category: 'alkali metal', atomic_mass: 85.4682, boil: 961, xpos: 1, ypos: 5, electronic_configuration: '[Kr] 5s¹', atomic_radius: 211, electronegativity: 0.82 };
                 const predictedTile = createTile(predictedElement);
                 predictedTile.id = 'predicted-37';
                 predictedTile.setAttribute('material', 'emissive', categoryColors['alkali metal'], 'emissiveIntensity', 0.5);
                 tableContainer.appendChild(predictedTile);
-                updateInfoCard(predictedElement);
-
-                const detailsText = infoDetails.getAttribute('value');
-                infoDetails.setAttribute('value', 'PREDICTION LOGIC:\nBased on trends, element 37 should be in Group 1, Period 5. This makes it an alkali metal with an s¹ configuration.\n\n' + detailsText);
+                
+                // ВИПРАВЛЕНО: Текст логіки прогнозу
+                const predictionLogic = "PREDICTION LOGIC:\nBased on trends, element 37 is in Group 1, Period 5.\nIt is predicted to be an alkali metal with an s¹ configuration.";
+                updateInfoCard(predictedElement, predictionLogic);
             });
             
             function showAtomicRadius() {
                 tiles.forEach(tile => {
                     const info = JSON.parse(tile.dataset.elementInfo);
                     const radius = info.atomic_radius || 60;
-                    const newHeight = (radius / 200) + 0.5; // Нормалізація висоти
-                    tile.setAttribute('animation__radius', { property: 'scale.y', to: newHeight, dur: 500, easing: 'easeInOutQuad' });
+                    const newHeight = (radius / 100) * 0.8;
+                    tile.setAttribute('animation', { property: 'scale.y', to: newHeight, dur: 500, easing: 'easeInOutQuad' });
                 });
             }
 
@@ -192,15 +193,15 @@
                         const finalColor = blue.lerp(red, ratio);
                         color = '#' + finalColor.getHexString();
                     }
-                    tile.setAttribute('animation__electro', { property: 'material.color', to: color, dur: 500 });
+                    tile.setAttribute('animation__color', { property: 'material.color', to: color, dur: 500 });
                 });
             }
 
             function resetView() {
                 tiles.forEach(tile => {
                     const info = JSON.parse(tile.dataset.elementInfo);
-                    tile.setAttribute('animation__radius', 'to', 1);
-                    tile.setAttribute('animation__electro', 'to', categoryColors[info.category] || '#FFF');
+                    tile.setAttribute('animation', { property: 'scale.y', to: 1, dur: 500 });
+                    tile.setAttribute('animation__color', { property: 'material.color', to: categoryColors[info.category] || '#FFF', dur: 500 });
                 });
             }
 
@@ -209,12 +210,9 @@
             document.querySelector('#reset-btn').addEventListener('click', resetView);
 
             elementsData.forEach(elementData => {
-                const tile = createTile(elementData);
-                tableContainer.appendChild(tile);
+                createTile(elementData);
             });
         });
     </script>
 </body>
 </html>
-Використовуйте код з обережністю .
-HTML-код
