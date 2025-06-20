@@ -110,6 +110,7 @@
                 box.setAttribute('position', `${xPos} ${yPos} 0`);
                 box.setAttribute('material', 'color', categoryColors[elementData.category] || '#FFF');
                 box.dataset.elementInfo = JSON.stringify(elementData);
+                
                 const symbolText = document.createElement('a-text');
                 symbolText.setAttribute('value', elementData.symbol);
                 symbolText.setAttribute('align', 'center');
@@ -117,20 +118,22 @@
                 symbolText.setAttribute('color', '#000');
                 symbolText.setAttribute('width', 5);
                 box.appendChild(symbolText);
+                
                 tiles.push(box);
                 return box;
             }
 
             function updateInfoCard(elementData, predictionLogic = "") {
+                infoCard.setAttribute('visible', true);
                 infoNumber.setAttribute('value', elementData.number);
                 infoSymbol.setAttribute('value', elementData.symbol);
                 infoName.setAttribute('value', elementData.name);
                 
                 const tempK = elementData.boil ? `${elementData.boil} K` : 'N/A';
                 const tempC = elementData.boil ? `${(elementData.boil - 273.15).toFixed(2)} °C` : 'N/A';
+                
                 const electronConfig = elementData.electronic_configuration || 'N/A';
                 
-                // ВИПРАВЛЕНО: Формуємо текст з логікою прогнозу окремо
                 let detailsText = 
                     `Atomic Mass: ${elementData.atomic_mass.toFixed(4)}\n` +
                     `Atomic Radius: ${elementData.atomic_radius} pm\n` +
@@ -149,7 +152,6 @@
             document.querySelector('a-scene').addEventListener('click', function(event) {
                 const target = event.target;
                 if (target.classList.contains('clickable') && target.dataset.elementInfo) {
-                    infoCard.setAttribute('visible', true);
                     const info = JSON.parse(target.dataset.elementInfo);
                     updateInfoCard(info);
                 }
