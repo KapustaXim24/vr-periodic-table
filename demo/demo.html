@@ -119,7 +119,7 @@
                 symbolText.setAttribute('width', 5);
                 box.appendChild(symbolText);
                 
-                tiles.push(box);
+                tiles.push(box); // Додаємо створений кубик у масив для подальших маніпуляцій
                 return box;
             }
 
@@ -208,8 +208,11 @@
             document.querySelector('#en-trend-btn').addEventListener('click', showElectronegativity);
             document.querySelector('#reset-btn').addEventListener('click', resetView);
 
+            // ВИПРАВЛЕНО: Цей цикл тепер знаходиться в кінці,
+            // і він ПРАВИЛЬНО додає всі створені елементи до сцени.
             elementsData.forEach(elementData => {
-                createTile(elementData);
+                const tile = createTile(elementData);
+                tableContainer.appendChild(tile);
             });
         });
     </script>
