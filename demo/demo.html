@@ -31,20 +31,21 @@
         </a-entity>
 
         <a-entity id="controls-panel" position="0 -2.5 -6">
+            <!-- ВИПРАВЛЕНО: Зменшено width і додано z-position для тексту на кнопках -->
             <a-entity id="radius-trend-btn" class="clickable" geometry="primitive: box; width: 2.2; height: 0.5; depth: 0.2" material="color: #6c5ce7" position="-3 0 0">
-                <a-text value="Radius Trend" align="center" color="#FFF" width="3" position="0 0 0.1"></a-text>
+                <a-text value="Radius Trend" align="center" color="#FFF" width="2" position="0 0 0.15"></a-text>
             </a-entity>
             <a-entity id="en-trend-btn" class="clickable" geometry="primitive: box; width: 2.2; height: 0.5; depth: 0.2" material="color: #00b894" position="0 0 0">
-                <a-text value="Electronegativity" align="center" color="#FFF" width="3" position="0 0 0.1"></a-text>
+                <a-text value="Electronegativity" align="center" color="#FFF" width="2" position="0 0 0.15"></a-text>
             </a-entity>
             <a-entity id="reset-btn" class="clickable" geometry="primitive: box; width: 2.2; height: 0.5; depth: 0.2" material="color: #636e72" position="3 0 0">
-                <a-text value="Reset View" align="center" color="#FFF" width="3" position="0 0 0.1"></a-text>
+                <a-text value="Reset View" align="center" color="#FFF" width="2" position="0 0 0.15"></a-text>
             </a-entity>
         </a-entity>
 
         <a-entity id="predict-button" class="clickable" geometry="primitive: box; width: 3; height: 0.5; depth: 0.2"
                   material="color: #40E0D0" position="0 -3.5 -6">
-            <a-text value="Predict Element 37" align="center" color="#000" width="4" position="0 0 0.1"></a-text>
+            <a-text value="Predict Element 37" align="center" color="#000" width="2.5" position="0 0 0.15"></a-text>
         </a-entity>
 
         <a-camera position="0 1.6 0"></a-camera>
@@ -110,7 +111,6 @@
                 box.setAttribute('position', `${xPos} ${yPos} 0`);
                 box.setAttribute('material', 'color', categoryColors[elementData.category] || '#FFF');
                 box.dataset.elementInfo = JSON.stringify(elementData);
-                
                 const symbolText = document.createElement('a-text');
                 symbolText.setAttribute('value', elementData.symbol);
                 symbolText.setAttribute('align', 'center');
@@ -118,7 +118,6 @@
                 symbolText.setAttribute('color', '#000');
                 symbolText.setAttribute('width', 5);
                 box.appendChild(symbolText);
-                
                 tiles.push(box);
                 return box;
             }
@@ -130,7 +129,6 @@
                 
                 const tempK = elementData.boil ? `${elementData.boil} K` : 'N/A';
                 const tempC = elementData.boil ? `${(elementData.boil - 273.15).toFixed(2)} °C` : 'N/A';
-                
                 const electronConfig = elementData.electronic_configuration || 'N/A';
                 
                 let detailsText = 
@@ -140,7 +138,6 @@
                     `Boiling Point: ${tempK} / ${tempC}\n\n` +
                     `Configuration: ${electronConfig}`;
                 
-                // ВИПРАВЛЕНО: Додаємо текст прогнозу на новий рядок
                 if (predictionLogic) {
                     detailsText = `${predictionLogic}\n\n${detailsText}`;
                 }
@@ -166,7 +163,6 @@
                 predictedTile.setAttribute('material', 'emissive', categoryColors['alkali metal'], 'emissiveIntensity', 0.5);
                 tableContainer.appendChild(predictedTile);
                 
-                // ВИПРАВЛЕНО: Текст логіки прогнозу
                 const predictionLogic = "PREDICTION LOGIC:\nBased on trends, element 37 is in Group 1, Period 5.\nIt is predicted to be an alkali metal with an s¹ configuration.";
                 updateInfoCard(predictedElement, predictionLogic);
             });
