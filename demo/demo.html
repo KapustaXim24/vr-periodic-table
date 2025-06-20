@@ -51,8 +51,6 @@
     </a-scene>
     
     <script>
-        // ВИПРАВЛЕНО: Весь код тепер всередині цієї функції,
-        // яка чекає на повне завантаження сторінки.
         document.addEventListener('DOMContentLoaded', function() {
             const elementsData = [
                 {"name":"Hydrogen","atomic_mass":1.008,"boil":20.271,"category":"diatomic nonmetal","number":1,"symbol":"H","xpos":1,"ypos":1,"electronic_configuration":"1s¹","atomic_radius":37,"electronegativity":2.2},
@@ -112,7 +110,6 @@
                 box.setAttribute('position', `${xPos} ${yPos} 0`);
                 box.setAttribute('material', 'color', categoryColors[elementData.category] || '#FFF');
                 box.dataset.elementInfo = JSON.stringify(elementData);
-                
                 const symbolText = document.createElement('a-text');
                 symbolText.setAttribute('value', elementData.symbol);
                 symbolText.setAttribute('align', 'center');
@@ -120,27 +117,97 @@
                 symbolText.setAttribute('color', '#000');
                 symbolText.setAttribute('width', 5);
                 box.appendChild(symbolText);
-                
-                tiles.push(box); // Додаємо створений кубик у масив для подальших маніпуляцій
+                tiles.push(box);
                 return box;
             }
 
-            // ... (решта коду залишається без змін) ...
-            function updateInfoCard(elementData, predictionLogic = "") { /* ... */ }
-            document.querySelector('a-scene').addEventListener('click', function(event) { /* ... */ });
-            document.querySelector('#predict-button').addEventListener('click', function() { /* ... */ });
-            function showAtomicRadius() { /* ... */ }
-            function showElectronegativity() { /* ... */ }
-            function resetView() { /* ... */ }
+            function updateInfoCard(elementData, predictionLogic = "") {
+                infoNumber.setAttribute('value', elementData.number);
+                infoSymbol.setAttribute('value', elementData.symbol);
+                infoName.setAttribute('value', elementData.name);
+                
+                const tempK = elementData.boil ? `${elementData.boil} K` : 'N/A';
+                const tempC = elementData.boil ? `${(elementData.boil - 273.15).toFixed(2)} °C` : 'N/A';
+                const electronConfig = elementData.electronic_configuration || 'N/A';
+                
+                // ВИПРАВЛЕНО: Формуємо текст з логікою прогнозу окремо
+                let detailsText = 
+                    `Atomic Mass: ${elementData.atomic_mass.toFixed(4)}\n` +
+                    `Atomic Radius: ${elementData.atomic_radius} pm\n` +
+                    `Category: ${elementData.category}\n\n` +
+                    `Boiling Point: ${tempK} / ${tempC}\n\n` +
+                    `Configuration: ${electronConfig}`;
+                
+                if (predictionLogic) {
+                    infoName.setAttribute('value', `${elementData.name} (Predicted)`);
+                    detailsText = `${predictionLogic}\n\n${detailsText}`;
+                }
+                
+                infoDetails.setAttribute('value', detailsText);
+            }
+
+            document.querySelector('a-scene').addEventListener('click', function(event) {
+                const target = event.target;
+                if (target.classList.contains('clickable') && target.dataset.elementInfo) {
+                    infoCard.setAttribute('visible', true);
+                    const info = JSON.parse(target.dataset.elementInfo);
+                    updateInfoCard(info);
+                }
+            });
+
+            document.querySelector('#predict-button').addEventListener('click', function() {
+                if (document.getElementById('predicted-37')) return;
+                const lastElement = elementsData.find(el => el.number === 36);
+                const predictedElement = { number: 37, symbol: 'Rb', name: 'Rubidium', category: 'alkali metal', atomic_mass: 85.4682, boil: 961, xpos: 1, ypos: 5, electronic_configuration: '[Kr] 5s¹', atomic_radius: 211, electronegativity: 0.82 };
+                const predictedTile = createTile(predictedElement);
+                predictedTile.id = 'predicted-37';
+                predictedTile.setAttribute('material', 'emissive', categoryColors['alkali metal'], 'emissiveIntensity', 0.5);
+                tableContainer.appendChild(predictedTile);
+                
+                const predictionLogic = "PREDICTION LOGIC:\nBased on trends, element 37 is in Group 1, Period 5.\nIt is predicted to be an alkali metal with an s¹ configuration.";
+                updateInfoCard(predictedElement, predictionLogic);
+            });
+            
+            function showAtomicRadius() {
+                tiles.forEach(tile => {
+                    const info = JSON.parse(tile.dataset.elementInfo);
+                    const radius = info.atomic_radius || 60;
+                    const newHeight = (radius / 100) * 0.8;
+                    tile.setAttribute('animation', { property: 'scale.y', to: newHeight, dur: 500, easing: 'easeInOutQuad' });
+                });
+            }
+
+            function showElectronegativity() {
+                const minElectro = 0.7, maxElectro = 4.0;
+                tiles.forEach(tile => {
+                    const info = JSON.parse(tile.dataset.elementInfo);
+                    const electronegativity = info.electronegativity;
+                    let color = '#CCCCCC';
+                    if (electronegativity) {
+                        const ratio = (electronegativity - minElectro) / (maxElectro - minElectro);
+                        const blue = new THREE.Color(0xadd8e6);
+                        const red = new THREE.Color(0xff6347);
+                        const finalColor = blue.lerp(red, ratio);
+                        color = '#' + finalColor.getHexString();
+                    }
+                    tile.setAttribute('animation__color', { property: 'material.color', to: color, dur: 500 });
+                });
+            }
+
+            function resetView() {
+                tiles.forEach(tile => {
+                    const info = JSON.parse(tile.dataset.elementInfo);
+                    tile.setAttribute('animation', { property: 'scale.y', to: 1, dur: 500 });
+                    tile.setAttribute('animation__color', { property: 'material.color', to: categoryColors[info.category] || '#FFF', dur: 500 });
+                });
+            }
+
             document.querySelector('#radius-trend-btn').addEventListener('click', showAtomicRadius);
             document.querySelector('#en-trend-btn').addEventListener('click', showElectronegativity);
             document.querySelector('#reset-btn').addEventListener('click', resetView);
 
-            // ВИПРАВЛЕНО: Цей цикл тепер знаходиться в кінці,
-            // і він ПРАВИЛЬНО додає всі створені елементи до сцени.
             elementsData.forEach(elementData => {
-                const tile = createTile(elementData);
-                tableContainer.appendChild(tile);
+                createTile(elementData);
             });
         });
     </script>
