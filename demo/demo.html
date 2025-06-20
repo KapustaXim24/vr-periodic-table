@@ -51,8 +51,6 @@
     </a-scene>
     
     <script>
-        // ВИПРАВЛЕНО: Весь код тепер всередині цієї функції,
-        // яка чекає на повне завантаження сторінки.
         document.addEventListener('DOMContentLoaded', function() {
             const elementsData = [
                 {"name":"Hydrogen","atomic_mass":1.008,"boil":20.271,"category":"diatomic nonmetal","number":1,"symbol":"H","xpos":1,"ypos":1,"electronic_configuration":"1s¹","atomic_radius":37,"electronegativity":2.2},
@@ -167,9 +165,7 @@
                 predictedTile.id = 'predicted-37';
                 predictedTile.setAttribute('material', 'emissive', categoryColors['alkali metal'], 'emissiveIntensity', 0.5);
                 tableContainer.appendChild(predictedTile);
-                
-                const predictionLogic = "PREDICTION LOGIC:\nBased on trends, element 37 is in Group 1, Period 5.\nIt is predicted to be an alkali metal with an s¹ configuration.";
-                updateInfoCard(predictedElement, predictionLogic);
+             }
             });
             
             function showAtomicRadius() {
@@ -210,8 +206,7 @@
             document.querySelector('#en-trend-btn').addEventListener('click', showElectronegativity);
             document.querySelector('#reset-btn').addEventListener('click', resetView);
 
-            // ВИПРАВЛЕНО: Цей цикл тепер знаходиться в кінці,
-            // і він ПРАВИЛЬНО додає всі створені елементи до сцени.
+            
             elementsData.forEach(elementData => {
                 const tile = createTile(elementData);
                 tableContainer.appendChild(tile);
