@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Final Interactive VR Periodic Table</title>
+    <title> Interactive VR Periodic Table</title>
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
 </head>
 <body>
@@ -164,10 +164,8 @@
                 predictedTile.setAttribute('material', 'emissive', categoryColors['alkali metal'], 'emissiveIntensity', 0.5);
                 tableContainer.appendChild(predictedTile);
                 
-                // ВИПРАВЛЕНО: Текст логіки прогнозу більше не передається в updateInfoCard
-                // Ви можете пояснити цю логіку усно під час захисту.
                 updateInfoCard(predictedElement);
-                infoName.setAttribute('value', `${predictedElement.name} (Predicted)`); // Додаємо '(Predicted)' до назви
+                infoName.setAttribute('value', `${predictedElement.name} (Predicted)`);
             });
             
             function showAtomicRadius() {
