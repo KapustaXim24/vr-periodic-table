@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Interactive VR Periodic Table</title>
+    <title>Final Interactive VR Periodic Table</title>
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
 </head>
 <body>
@@ -20,17 +20,18 @@
         <a-light type="ambient" color="#AAA"></a-light>
         <a-light type="directional" position="-1 1 2" intensity="0.8"></a-light>
         
-        <!-- Розташування, як на вашому улюбленому скріншоті -->
-        <a-entity id="periodic-table-container" position="-10.5 4 -8" periodic-table-generator></a-entity>
+        <!-- Розташування, як на скріншоті, який вам сподобався -->
+        <a-entity id="periodic-table-container" position="-10.5 4 -8"></a-entity>
         
         <a-entity id="info-card" position="0 7 -8" visible="true">
             <a-plane width="7.5" height="6" color="#222" material="opacity: 0.85"></a-plane>
-            <a-text id="info-number" value="" color="#FFF" width="8" align="left" position="-3.4 2.5 0.1"></a-text>
-            <a-text id="info-symbol" value="?" color="#FFF" width="15" align="center" position="-0.5 1.3 0.1"></a-text>
-            <a-text id="info-name" value="Periodic Table" color="#FFF" width="6" align="center" position="-0.5 0.1 0.1"></a-text>
-            <a-text id="info-details" value="Point and click on an element to see details." color="#DDD" width="7" align="left" wrap-count="50" position="-3.4 -0.8 0.1"></a-text>
+            <a-text id="info-number" value="" color="#FFF" width="8" align="left" position="-3.4 2.4 0.1"></a-text>
+            <a-text id="info-symbol" value="?" color="#FFF" width="15" align="center" position="-0.5 1.2 0.1"></a-text>
+            <a-text id="info-name" value="Periodic Table" color="#FFF" width="6" align="center" position="-0.5 -0.1 0.1"></a-text>
+            <a-text id="info-details" value="Point and click on an element or use the controls below." color="#DDD" width="7" align="left" wrap-count="50" position="-3.4 -1.2 0.1"></a-text>
         </a-entity>
 
+        <!-- Нові кнопки для візуалізації трендів -->
         <a-entity id="controls-panel" position="0 -2.5 -6">
             <a-entity id="radius-trend-btn" class="clickable" geometry="primitive: box; width: 2.2; height: 0.5; depth: 0.2" material="color: #6c5ce7" position="-3 0 0">
                 <a-text value="Radius Trend" align="center" color="#FFF" width="3" position="0 0 0.1"></a-text>
@@ -43,11 +44,13 @@
             </a-entity>
         </a-entity>
 
+        <!-- Кнопка для ML прогнозування -->
         <a-entity id="predict-button" class="clickable" geometry="primitive: box; width: 3; height: 0.5; depth: 0.2"
                   material="color: #40E0D0" position="0 -3.5 -6">
             <a-text value="Predict Element 37" align="center" color="#000" width="4" position="0 0 0.1"></a-text>
         </a-entity>
 
+        <!-- Камера з керуванням мишкою -->
         <a-camera position="0 1.6 0"></a-camera>
     </a-scene>
     
@@ -64,17 +67,6 @@
                 {"name":"Oxygen","atomic_mass":15.999,"boil":90.188,"category":"diatomic nonmetal","number":8,"symbol":"O","xpos":16,"ypos":2,"electronic_configuration":"[He] 2s² 2p⁴","atomic_radius":73,"electronegativity":3.44},
                 {"name":"Fluorine","atomic_mass":18.998403,"boil":85.03,"category":"diatomic nonmetal","number":9,"symbol":"F","xpos":17,"ypos":2,"electronic_configuration":"[He] 2s² 2p⁵","atomic_radius":71,"electronegativity":3.98},
                 {"name":"Neon","atomic_mass":20.17976,"boil":27.104,"category":"noble gas","number":10,"symbol":"Ne","xpos":18,"ypos":2,"electronic_configuration":"[He] 2s² 2p⁶","atomic_radius":69,"electronegativity":null},
-                {"name":"Sodium","atomic_mass":22.989769,"boil":1156.09,"category":"alkali metal","number":11,"symbol":"Na","xpos":1,"ypos":3,"electronic_configuration":"[Ne] 3s¹","atomic_radius":154,"electronegativity":0.93},
-                {"name":"Magnesium","atomic_mass":24.305,"boil":1363,"category":"alkaline earth metal","number":12,"symbol":"Mg","xpos":2,"ypos":3,"electronic_configuration":"[Ne] 3s²","atomic_radius":130,"electronegativity":1.31},
-                {"name":"Aluminium","atomic_mass":26.981538,"boil":2743,"category":"post-transition metal","number":13,"symbol":"Al","xpos":13,"ypos":3,"electronic_configuration":"[Ne] 3s² 3p¹","atomic_radius":118,"electronegativity":1.61},
-                {"name":"Silicon","atomic_mass":28.085,"boil":3265,"category":"metalloid","number":14,"symbol":"Si","xpos":14,"ypos":3,"electronic_configuration":"[Ne] 3s² 3p²","atomic_radius":111,"electronegativity":1.9},
-                {"name":"Phosphorus","atomic_mass":30.973762,"boil":553.7,"category":"polyatomic nonmetal","number":15,"symbol":"P","xpos":15,"ypos":3,"electronic_configuration":"[Ne] 3s² 3p³","atomic_radius":106,"electronegativity":2.19},
-                {"name":"Sulfur","atomic_mass":32.06,"boil":717.8,"category":"polyatomic nonmetal","number":16,"symbol":"S","xpos":16,"ypos":3,"electronic_configuration":"[Ne] 3s² 3p⁴","atomic_radius":102,"electronegativity":2.58},
-                {"name":"Chlorine","atomic_mass":35.45,"boil":239.11,"category":"diatomic nonmetal","number":17,"symbol":"Cl","xpos":17,"ypos":3,"electronic_configuration":"[Ne] 3s² 3p⁵","atomic_radius":99,"electronegativity":3.16},
-                {"name":"Argon","atomic_mass":39.9481,"boil":87.302,"category":"noble gas","number":18,"symbol":"Ar","xpos":18,"ypos":3,"electronic_configuration":"[Ne] 3s² 3p⁶","atomic_radius":97,"electronegativity":null},
-                {"name":"Potassium","atomic_mass":39.09831,"boil":1032,"category":"alkali metal","number":19,"symbol":"K","xpos":1,"ypos":4,"electronic_configuration":"[Ar] 4s¹","atomic_radius":196,"electronegativity":0.82},
-                {"name":"Calcium","atomic_mass":40.0784,"boil":1757,"category":"alkaline earth metal","number":20,"symbol":"Ca","xpos":2,"ypos":4,"electronic_configuration":"[Ar] 4s²","atomic_radius":174,"electronegativity":1},
-                {"name":"Scandium","atomic_mass":44.955908,"boil":3109,"category":"transition metal","number":21,"symbol":"Sc","xpos":3,"ypos":4,"electronic_configuration":"[Ar] 3d¹ 4s²","atomic_},
                 {"name":"Sodium","atomic_mass":22.989769,"boil":1156.09,"category":"alkali metal","number":11,"symbol":"Na","xpos":1,"ypos":3,"electronic_configuration":"[Ne] 3s¹","atomic_radius":154,"electronegativity":0.93},
                 {"name":"Magnesium","atomic_mass":24.305,"boil":1363,"category":"alkaline earth metal","number":12,"symbol":"Mg","xpos":2,"ypos":3,"electronic_configuration":"[Ne] 3s²","atomic_radius":130,"electronegativity":1.31},
                 {"name":"Aluminium","atomic_mass":26.981538,"boil":2743,"category":"post-transition metal","number":13,"symbol":"Al","xpos":13,"ypos":3,"electronic_configuration":"[Ne] 3s² 3p¹","atomic_radius":118,"electronegativity":1.61},
@@ -122,6 +114,7 @@
                 box.setAttribute('position', `${xPos} ${yPos} 0`);
                 box.setAttribute('material', 'color', categoryColors[elementData.category] || '#FFF');
                 box.dataset.elementInfo = JSON.stringify(elementData);
+                
                 const symbolText = document.createElement('a-text');
                 symbolText.setAttribute('value', elementData.symbol);
                 symbolText.setAttribute('align', 'center');
@@ -129,11 +122,12 @@
                 symbolText.setAttribute('color', '#000');
                 symbolText.setAttribute('width', 5);
                 box.appendChild(symbolText);
+                
                 tiles.push(box);
                 return box;
             }
 
-            function updateInfoCard(elementData, predictionLogic = "") {
+            function updateInfoCard(elementData) {
                 infoNumber.setAttribute('value', elementData.number);
                 infoSymbol.setAttribute('value', elementData.symbol);
                 infoName.setAttribute('value', elementData.name);
@@ -143,23 +137,19 @@
                 
                 const electronConfig = elementData.electronic_configuration || 'N/A';
                 
-                let detailsText = 
+                const detailsText = 
                     `Atomic Mass: ${elementData.atomic_mass.toFixed(4)}\n` +
                     `Atomic Radius: ${elementData.atomic_radius} pm\n` +
                     `Category: ${elementData.category}\n\n` +
                     `Boiling Point: ${tempK} / ${tempC}\n\n` +
                     `Configuration: ${electronConfig}`;
                 
-                if (predictionLogic) {
-                    detailsText = predictionLogic + '\n\n' + detailsText;
-                }
-                
                 infoDetails.setAttribute('value', detailsText);
             }
 
             document.querySelector('a-scene').addEventListener('click', function(event) {
                 const target = event.target;
-                if (target.classList.contains('clickable') && target.dataset.elementInfo) {
+                if (target.dataset.elementInfo) {
                     infoCard.setAttribute('visible', true);
                     const info = JSON.parse(target.dataset.elementInfo);
                     updateInfoCard(info);
@@ -174,15 +164,17 @@
                 predictedTile.id = 'predicted-37';
                 predictedTile.setAttribute('material', 'emissive', categoryColors['alkali metal'], 'emissiveIntensity', 0.5);
                 tableContainer.appendChild(predictedTile);
-                const predictionLogic = "PREDICTION LOGIC:\nBased on trends, element 37 is in Group 1, Period 5, making it an alkali metal with an s¹ configuration.";
-                updateInfoCard(predictedElement, predictionLogic);
+                updateInfoCard(predictedElement);
+
+                const detailsText = infoDetails.getAttribute('value');
+                infoDetails.setAttribute('value', 'PREDICTION LOGIC:\nBased on trends, element 37 should be in Group 1, Period 5. This makes it an alkali metal with an s¹ configuration.\n\n' + detailsText);
             });
             
             function showAtomicRadius() {
                 tiles.forEach(tile => {
                     const info = JSON.parse(tile.dataset.elementInfo);
                     const radius = info.atomic_radius || 60;
-                    const newHeight = (radius / 100) * 0.8;
+                    const newHeight = (radius / 200) + 0.5; // Нормалізація висоти
                     tile.setAttribute('animation__radius', { property: 'scale.y', to: newHeight, dur: 500, easing: 'easeInOutQuad' });
                 });
             }
@@ -207,8 +199,8 @@
             function resetView() {
                 tiles.forEach(tile => {
                     const info = JSON.parse(tile.dataset.elementInfo);
-                    tile.setAttribute('animation__radius', { property: 'scale.y', to: 1, dur: 500 });
-                    tile.setAttribute('animation__electro', { property: 'material.color', to: categoryColors[info.category] || '#FFF', dur: 500 });
+                    tile.setAttribute('animation__radius', 'to', 1);
+                    tile.setAttribute('animation__electro', 'to', categoryColors[info.category] || '#FFF');
                 });
             }
 
@@ -218,8 +210,11 @@
 
             elementsData.forEach(elementData => {
                 const tile = createTile(elementData);
+                tableContainer.appendChild(tile);
             });
         });
     </script>
 </body>
 </html>
+Використовуйте код з обережністю .
+HTML-код
