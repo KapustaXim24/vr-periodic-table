@@ -110,6 +110,7 @@
                 box.setAttribute('position', `${xPos} ${yPos} 0`);
                 box.setAttribute('material', 'color', categoryColors[elementData.category] || '#FFF');
                 box.dataset.elementInfo = JSON.stringify(elementData);
+                
                 const symbolText = document.createElement('a-text');
                 symbolText.setAttribute('value', elementData.symbol);
                 symbolText.setAttribute('align', 'center');
@@ -117,12 +118,12 @@
                 symbolText.setAttribute('color', '#000');
                 symbolText.setAttribute('width', 5);
                 box.appendChild(symbolText);
+                
                 tiles.push(box);
                 return box;
             }
 
-            function updateInfoCard(elementData) {
-                infoCard.setAttribute('visible', true);
+            function updateInfoCard(elementData, predictionLogic = "") {
                 infoNumber.setAttribute('value', elementData.number);
                 infoSymbol.setAttribute('value', elementData.symbol);
                 infoName.setAttribute('value', elementData.name);
@@ -131,12 +132,17 @@
                 const tempC = elementData.boil ? `${(elementData.boil - 273.15).toFixed(2)} °C` : 'N/A';
                 const electronConfig = elementData.electronic_configuration || 'N/A';
                 
-                const detailsText = 
+                let detailsText = 
                     `Atomic Mass: ${elementData.atomic_mass.toFixed(4)}\n` +
                     `Atomic Radius: ${elementData.atomic_radius} pm\n` +
                     `Category: ${elementData.category}\n\n` +
                     `Boiling Point: ${tempK} / ${tempC}\n\n` +
                     `Configuration: ${electronConfig}`;
+                
+                if (predictionLogic) {
+                    infoName.setAttribute('value', `${elementData.name} (Predicted)`);
+                    detailsText = `${predictionLogic}\n\n${detailsText}`;
+                }
                 
                 infoDetails.setAttribute('value', detailsText);
             }
@@ -152,12 +158,16 @@
             document.querySelector('#predict-button').addEventListener('click', function() {
                 if (document.getElementById('predicted-37')) return;
                 const lastElement = elementsData.find(el => el.number === 36);
-                const predictedElement = { number: 37, symbol: 'Rb', name: 'Rubidium (Predicted)', category: 'alkali metal', atomic_mass: 85.4682, boil: 961, xpos: 1, ypos: 5, electronic_configuration: '[Kr] 5s¹', atomic_radius: 211, electronegativity: 0.82 };
+                const predictedElement = { number: 37, symbol: 'Rb', name: 'Rubidium', category: 'alkali metal', atomic_mass: 85.4682, boil: 961, xpos: 1, ypos: 5, electronic_configuration: '[Kr] 5s¹', atomic_radius: 211, electronegativity: 0.82 };
                 const predictedTile = createTile(predictedElement);
                 predictedTile.id = 'predicted-37';
                 predictedTile.setAttribute('material', 'emissive', categoryColors['alkali metal'], 'emissiveIntensity', 0.5);
                 tableContainer.appendChild(predictedTile);
+                
+                // ВИПРАВЛЕНО: Текст логіки прогнозу більше не передається в updateInfoCard
+                // Ви можете пояснити цю логіку усно під час захисту.
                 updateInfoCard(predictedElement);
+                infoName.setAttribute('value', `${predictedElement.name} (Predicted)`); // Додаємо '(Predicted)' до назви
             });
             
             function showAtomicRadius() {
@@ -199,7 +209,8 @@
             document.querySelector('#reset-btn').addEventListener('click', resetView);
 
             elementsData.forEach(elementData => {
-                createTile(elementData);
+                const tile = createTile(elementData);
+                tableContainer.appendChild(tile);
             });
         });
     </script>
